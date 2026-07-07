@@ -23,34 +23,24 @@ robots.txt / sitemap.xml    SEO
 6. 관련 도구 3개 내부링크
 7. 푸터 disclaimer
 
-## 배포 절차 (사용자 개입 필요 — 총 1시간 이내)
+## 배포 현황 (2026-07-07 기준)
 
-### 1) 도메인 (연 $10~15)
-- `walletcalcs.com` 가용 여부 확인 후 Cloudflare Registrar 또는 Namecheap에서 구매.
-- 다른 도메인을 쓰면: 프로젝트 전체에서 `walletcalcs.com` 문자열 치환 + 사이트명 로고 변경.
+- **라이브 URL**: https://walletcalcs.pages.dev (Cloudflare Pages 직접 업로드 방식, 무료)
+- **저장소**: https://github.com/godkal/walletcalcs (백업·이력 관리용; push가 배포를 트리거하지 않음)
+- **배포 명령**: `npx --yes wrangler@latest pages deploy . --project-name=walletcalcs --branch=main --commit-dirty=true` (wrangler는 이 PC에 OAuth 인증됨)
+- **비용 0원 전략**: 트래픽 데이터가 생기면(2~3개월 후) 그때 도메인 구매 → Pages에 커스텀 도메인 연결 → 전체 URL 치환 → AdSense 신청. 무료 서브도메인으로는 AdSense 승인 불가(루트 도메인 필요).
 
-### 2) Cloudflare Pages (무료)
-1. github.com에 저장소 생성 → 이 폴더 push (또는 Pages 직접 업로드).
-2. Cloudflare 대시보드 → Workers & Pages → Create → Pages → 저장소 연결.
-3. 빌드 설정: 프레임워크 없음, 빌드 명령 없음, 출력 디렉터리 `/`.
-4. Custom domain에 구매한 도메인 연결.
+### 남은 단계
+1. **Google Search Console**: URL-prefix 속성으로 `https://walletcalcs.pages.dev` 등록 + sitemap 제출 (무료, HTML 파일 인증 가능 — Claude가 인증 파일 배포 가능).
+2. **2~3개월 후 트래픽 확인** → 유의미하면 도메인 구매(연 ~2만원) + AdSense 신청.
+3. AdSense 승인 후: 스니펫을 각 페이지 `<head>`에, 광고 유닛을 `.ad-slot`에 삽입 (Claude 작업).
 
-### 3) Google Search Console (무료, 필수)
-1. search.google.com/search-console → 도메인 속성 추가 (DNS 인증은 Cloudflare에서 TXT 레코드 추가).
-2. Sitemaps 메뉴에 `sitemap.xml` 제출.
-3. 인덱싱은 보통 1~4주 소요.
+## 운영 (주간 자동 루프 — scheduled task `walletcalcs-weekly-expansion`)
 
-### 4) AdSense (수익 연결 — 본인 명의 필수)
-1. adsense.google.com 가입 (지급 계좌 = 본인 통장).
-2. 사이트 추가 → 심사 요청. 신규 사이트는 승인까지 2~6주. **콘텐츠가 어느 정도 인덱싱된 뒤(배포 후 2~4주) 신청하면 승인률이 높음.**
-3. 승인 후: 발급받은 스니펫을 각 페이지 `<head>`에 삽입하고 `.ad-slot`에 광고 유닛 배치 (이 작업은 Claude에게 요청).
-
-## 운영 (주간 자동 루프)
-
-매주 Claude가 수행:
-1. Search Console 노출 키워드 확인 (사용자가 스크린샷 공유 또는 API 연동)
-2. 신규 계산기 2~3개 제작 (위 페이지 패턴 준수, sitemap.xml에 추가, 홈 index.html에 카드 추가)
-3. 주간 리포트 생성
+매주 월 03:00 Claude가 자동 수행:
+1. 신규 계산기 2개 제작 (위 페이지 패턴 준수, sitemap.xml + 홈 index.html 등록)
+2. 로컬 검증 → git push → wrangler 배포 → 라이브 200 확인
+3. 주간 리포트 생성 (reports/, gitignore됨)
 
 ## 콘텐츠 정책 (중요 — Google 스팸 정책 회피)
 

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Amortization Calculator — Payment &amp; Year-by-Year Schedule</title>
+<meta name="description" content="Free loan amortization calculator. Get your exact monthly payment plus a year-by-year breakdown of principal, interest, and remaining balance for any loan.">
+<link rel="canonical" href="https://walletcalcs.com/tools/loan-amortization-calculator/">
+<meta property="og:title" content="Loan Amortization Calculator">
+<meta property="og:description" content="Monthly payment plus a full year-by-year principal and interest schedule for any loan.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/loan-amortization-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Loan Amortization Calculator",
+      "url": "https://walletcalcs.com/tools/loan-amortization-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Calculate a loan's monthly payment and view a year-by-year amortization schedule of principal, interest, and balance."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Loan Amortization Calculator", "item": "https://walletcalcs.com/tools/loan-amortization-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is loan amortization?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Amortization is the process of paying off a loan with fixed, scheduled payments that cover both interest and principal. Each payment first covers the interest accrued that month; the remainder reduces the principal. Because the balance shrinks over time, the interest portion falls and the principal portion grows with every payment, even though the payment amount stays the same." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is most of my early payment interest?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Interest is charged on the outstanding balance, which is largest at the start of the loan. On a $250,000 loan at 7%, the first month's interest is about $1,458 — most of a $1,663 payment. As the balance falls, monthly interest falls with it, so later payments are mostly principal." }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the difference between APR and interest rate?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The interest rate is the cost of borrowing the principal. APR (annual percentage rate) includes the interest rate plus certain upfront costs such as origination fees and points, spread over the loan term. APR is designed for comparing offers; the interest rate is what determines your monthly payment." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a shorter loan term always save money?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A shorter term means less total interest but a higher required monthly payment. A 15-year mortgage at the same rate as a 30-year cuts lifetime interest by more than half, but the payment is roughly 50% higher. A middle path: take the longer term for flexibility and voluntarily pay it on the shorter schedule." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Loan Amortization Calculator</nav>
+  <h1 class="page-title">Loan Amortization Calculator</h1>
+  <p class="page-subtitle">Your exact monthly payment, total interest cost, and a year-by-year schedule showing how each payment splits between principal and interest.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="amount">Loan amount</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="amount" value="250000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="rate">Interest rate <span class="hint">(annual)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="rate" value="7" min="0" max="30" step="0.05"></div>
+        </div>
+        <div class="field">
+          <label for="years">Loan term <span class="hint">(years)</span></label>
+          <div class="input-wrap"><input type="number" id="years" value="30" min="1" max="40" step="1"></div>
+        </div>
+        <div class="field">
+          <label for="extra">Extra monthly payment <span class="hint">(optional)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="extra" value="0" min="0" step="25"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Monthly payment</div>
+        <div class="value" id="payment">—</div>
+        <div class="sub" id="paymentSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Total of all payments</span><span class="v" id="totalPaid">—</span></div>
+        <div class="result-row"><span class="k">Total interest</span><span class="v" id="totalInterest">—</span></div>
+        <div class="result-row"><span class="k">Payoff time</span><span class="v" id="payoffTime">—</span></div>
+        <div class="result-row"><span class="k">Interest as % of loan</span><span class="v" id="interestPct">—</span></div>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Period</th><th>Principal paid</th><th>Interest paid</th><th>Balance</th></tr></thead>
+          <tbody id="schedule"></tbody>
+        </table>
+      </div>
+      <p class="result-note">Fixed-rate, fully amortizing loan. For mortgages, taxes and insurance are not included.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>What an amortization schedule tells you</h2>
+    <p>An amortization schedule is the complete payment map of a loan. For every period it shows three numbers: how much of your payment covered interest, how much reduced your principal, and what balance remains. Reading it reveals the two facts most borrowers find surprising:</p>
+    <ul>
+      <li><strong>Early payments barely dent the balance.</strong> On a 30-year, $250,000 loan at 7%, you pay about $20,000 in the first year — but the balance only drops by roughly $2,500.</li>
+      <li><strong>Total interest can rival the loan itself.</strong> That same loan costs about $349,000 in interest over 30 years — more than the amount borrowed.</li>
+    </ul>
+
+    <h2>The amortization formula</h2>
+    <p>Fixed loan payments come from a single formula:</p>
+    <div class="formula">M = P × r ÷ (1 − (1 + r)<sup>−n</sup>)</div>
+    <p>where <strong>M</strong> is the monthly payment, <strong>P</strong> the principal, <strong>r</strong> the monthly interest rate (annual ÷ 12), and <strong>n</strong> the number of payments. Each month, interest equals the current balance × r; whatever is left of your payment reduces principal. This calculator runs that loop month by month and rolls the results up by year.</p>
+
+    <h2>How to use the schedule to save money</h2>
+    <h3>1. Compare loan terms honestly</h3>
+    <p>Run the same amount and rate at 15 vs. 30 years. The 15-year payment is higher, but total interest usually falls by more than half. If the higher payment scares you, remember the hybrid strategy: take the 30-year for safety and pay it like a 15-year using the extra-payment field above.</p>
+    <h3>2. See what a rate difference is really worth</h3>
+    <p>A quarter-point sounds trivial. On $250,000 over 30 years, dropping from 7.00% to 6.75% saves about $15,000 in lifetime interest. That number tells you how many points are worth buying, and whether refinancing fees would pay for themselves.</p>
+    <h3>3. Watch the crossover point</h3>
+    <p>Scan the schedule for the year when principal paid overtakes interest paid. At 7% on a 30-year loan that happens around year 20 with no extra payments — and years earlier with even a modest extra payment. If you're deciding <a href="/tools/mortgage-payoff-calculator/">whether to prepay your mortgage</a>, that crossover shows why early extra dollars matter most.</p>
+
+    <h2>Which loans amortize this way?</h2>
+    <p>Fixed-rate mortgages, auto loans, personal loans, and most student loans all follow this schedule. Credit cards do not — they have no fixed term, and minimum payments are recalculated monthly (see our <a href="/tools/credit-card-payoff-calculator/">credit card payoff calculator</a> for that math). Adjustable-rate mortgages amortize too, but the schedule resets each time the rate adjusts.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>What is loan amortization?</summary>
+      <div class="faq-a">Amortization is paying off a loan with fixed, scheduled payments covering both interest and principal. Each payment first covers that month's interest; the remainder reduces principal. As the balance shrinks, the interest portion falls and the principal portion grows.</div>
+    </details>
+    <details>
+      <summary>Why is most of my early payment interest?</summary>
+      <div class="faq-a">Interest is charged on the outstanding balance, which is largest at the start. On a $250,000 loan at 7%, the first month's interest is about $1,458 of a $1,663 payment. As the balance falls, later payments become mostly principal.</div>
+    </details>
+    <details>
+      <summary>What's the difference between APR and interest rate?</summary>
+      <div class="faq-a">The interest rate determines your monthly payment. APR adds certain upfront costs (origination fees, points) spread over the term, making it the better number for comparing loan offers.</div>
+    </details>
+    <details>
+      <summary>Does a shorter loan term always save money?</summary>
+      <div class="faq-a">Shorter terms cut total interest sharply but raise the required payment. A 15-year mortgage more than halves lifetime interest versus a 30-year, at roughly 50% higher payments. You can also keep the 30-year term and voluntarily pay on a 15-year schedule.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/mortgage-payoff-calculator/"><div class="t">Mortgage Payoff Calculator</div><div class="d">How much do extra payments save you?</div></a>
+      <a class="tool-card" href="/tools/auto-loan-calculator/"><div class="t">Auto Loan Calculator</div><div class="d">Car payment with taxes, fees, and trade-in.</div></a>
+      <a class="tool-card" href="/tools/home-affordability-calculator/"><div class="t">Home Affordability Calculator</div><div class="d">How much house can you afford?</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function calc() {
+  const amount = num("amount");
+  const rate = num("rate");
+  const years = num("years");
+  const extra = num("extra");
+  const months = Math.round(years * 12);
+
+  const payment = pmt(amount, rate, months);
+  if (!isFinite(payment) || amount <= 0 || months <= 0) return;
+
+  const res = amortize(amount, rate, payment, extra);
+  const totalPaid = amount + res.totalInterest;
+
+  $("payment").textContent = fmtUSD2(payment + extra);
+  $("paymentSub").textContent = extra > 0 ? fmtUSD2(payment) + " required + " + fmtUSD(extra) + " extra" : "principal & interest";
+  $("totalPaid").textContent = fmtUSD(totalPaid);
+  $("totalInterest").textContent = fmtUSD(res.totalInterest);
+  $("payoffTime").textContent = fmtMonths(res.months);
+  $("interestPct").textContent = fmtPct((res.totalInterest / amount) * 100, 0);
+  renderYearlyTable("schedule", res.rows);
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

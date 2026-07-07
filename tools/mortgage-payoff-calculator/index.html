@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mortgage Payoff Calculator — See How Extra Payments Save You Thousands</title>
+<meta name="description" content="Free mortgage payoff calculator. Enter your balance, rate, and an extra monthly payment to see exactly how many years and how much interest you'll save.">
+<link rel="canonical" href="https://walletcalcs.com/tools/mortgage-payoff-calculator/">
+<meta property="og:title" content="Mortgage Payoff Calculator">
+<meta property="og:description" content="See how extra payments cut years and thousands in interest off your mortgage.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/mortgage-payoff-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Mortgage Payoff Calculator",
+      "url": "https://walletcalcs.com/tools/mortgage-payoff-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Calculate how extra monthly payments or a lump sum shorten your mortgage and reduce total interest."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Mortgage Payoff Calculator", "item": "https://walletcalcs.com/tools/mortgage-payoff-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is it better to pay extra on my mortgage or invest the money?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It depends on your mortgage rate versus your expected investment return. Paying extra on a mortgage earns you a guaranteed, tax-free return equal to your interest rate. If your rate is 7%, prepaying is equivalent to a guaranteed 7% return — hard to beat safely. If your rate is 3%, long-term index investing has historically returned more. Many people split the difference: invest up to any employer 401(k) match first, then put extra cash toward the mortgage." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do extra mortgage payments go toward principal automatically?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Not always. Some servicers apply extra money to next month's payment (including interest) unless you specify otherwise. When you send an extra payment, mark it as 'apply to principal' in your servicer's payment portal or on the check memo. Verify on your next statement that the principal balance dropped by the full extra amount." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does paying off a mortgage early have a penalty?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Most U.S. mortgages originated after 2014 have no prepayment penalty, because Qualified Mortgage rules restrict them. Some loans (certain jumbo, investment property, or non-QM loans) may charge a penalty in the first 3 years. Check your loan estimate or promissory note, or ask your servicer directly." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much difference does one extra payment a year make?",
+          "acceptedAnswer": { "@type": "Answer", "text": "One extra monthly payment per year (the effect of biweekly payments) typically shortens a 30-year mortgage by 4 to 6 years and saves tens of thousands of dollars in interest, depending on your rate. On a $300,000 loan at 6.5%, one extra payment a year saves roughly $70,000 in interest." }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I recast my mortgage after a lump-sum payment?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A recast keeps your term the same but lowers your required monthly payment after a large principal payment, usually for a small fee ($150–$500). Choose a recast if you want lower required payments and flexibility; skip it and keep paying the same amount if your goal is the fastest payoff and maximum interest savings." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Mortgage Payoff Calculator</nav>
+  <h1 class="page-title">Mortgage Payoff Calculator</h1>
+  <p class="page-subtitle">See exactly how much time and interest you save by paying extra each month — or by making a one-time lump-sum payment.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="balance">Current loan balance</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="balance" value="300000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="rate">Interest rate <span class="hint">(annual)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="rate" value="6.5" min="0" max="25" step="0.05"></div>
+        </div>
+        <div class="field">
+          <label for="years">Remaining term <span class="hint">(years)</span></label>
+          <div class="input-wrap"><input type="number" id="years" value="27" min="1" max="40" step="1"></div>
+        </div>
+        <div class="field">
+          <label for="extra">Extra payment per month</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="extra" value="200" min="0" step="25"></div>
+        </div>
+        <div class="field full">
+          <label for="lump">One-time lump sum toward principal <span class="hint">(optional)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="lump" value="0" min="0" step="500"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Total interest saved</div>
+        <div class="value" id="saved">—</div>
+        <div class="sub" id="savedSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Required monthly payment</span><span class="v" id="payment">—</span></div>
+        <div class="result-row"><span class="k">Time saved</span><span class="v" id="timeSaved">—</span></div>
+        <div class="result-row"><span class="k">Original payoff time</span><span class="v" id="origTime">—</span></div>
+        <div class="result-row"><span class="k">New payoff time</span><span class="v" id="newTime">—</span></div>
+        <div class="result-row"><span class="k">Original total interest</span><span class="v" id="origInterest">—</span></div>
+        <div class="result-row"><span class="k">New total interest</span><span class="v" id="newInterest">—</span></div>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Period</th><th>Principal paid</th><th>Interest paid</th><th>Balance</th></tr></thead>
+          <tbody id="schedule"></tbody>
+        </table>
+      </div>
+      <p class="result-note">Assumes principal and interest only (taxes and insurance excluded) and that extra payments are applied directly to principal.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>How extra mortgage payments actually work</h2>
+    <p>Every mortgage payment splits into two parts: interest (the lender's charge for that month) and principal (the part that reduces your debt). Early in a mortgage, most of the payment is interest — on a new 30-year loan at 6.5%, roughly two-thirds of your first payment is interest.</p>
+    <p>An extra payment skips the line. Because your required payment already covers that month's interest, <strong>every dollar of extra payment goes 100% to principal</strong>. A smaller principal means less interest accrues next month, so slightly more of your regular payment hits principal too. This compounding effect is why modest extra payments produce outsized savings over decades.</p>
+
+    <h2>The math behind the calculator</h2>
+    <p>The calculator first derives your required monthly payment from the standard amortization formula:</p>
+    <div class="formula">M = P × r ÷ (1 − (1 + r)<sup>−n</sup>)</div>
+    <p>where <strong>P</strong> is the balance, <strong>r</strong> is the monthly rate (annual rate ÷ 12), and <strong>n</strong> is the number of remaining months. It then simulates the loan month by month twice — once with your regular payment and once with the extra amount (and any lump sum applied up front) — and compares total interest and payoff dates.</p>
+
+    <h2>A realistic example</h2>
+    <p>Take a $300,000 balance at 6.5% with 27 years left. The required payment is about $1,943. Adding just <strong>$200 per month</strong>:</p>
+    <ul>
+      <li>Payoff time drops from 27 years to about 21½ years — <strong>5½ years sooner</strong>.</li>
+      <li>Total interest falls from roughly $329,000 to about $246,000 — <strong>about $83,000 saved</strong>.</li>
+    </ul>
+    <p>That's a return most people can't get anywhere else without risk: prepaying a 6.5% mortgage is mathematically identical to earning a guaranteed, tax-free 6.5% on that $200.</p>
+
+    <h2>Three ways to prepay (ranked by convenience)</h2>
+    <ol>
+      <li><strong>Monthly extra payment.</strong> Set an automatic extra amount with your servicer, flagged "apply to principal." Easiest to sustain.</li>
+      <li><strong>Biweekly payments.</strong> Pay half your payment every two weeks. Because there are 26 half-payments in a year, you make the equivalent of 13 monthly payments — one extra per year — without feeling it.</li>
+      <li><strong>Annual lump sum.</strong> Tax refunds and bonuses work well. A single $5,000 principal payment early in a 6.5% loan saves roughly $15,000 in lifetime interest.</li>
+    </ol>
+
+    <h2>When you should NOT prepay your mortgage</h2>
+    <p>Prepaying is not automatically the right move. Consider holding off if any of these apply:</p>
+    <ul>
+      <li><strong>You have higher-rate debt.</strong> Credit cards at 22% beat a mortgage at 6.5% every time. Kill the card debt first — our <a href="/tools/credit-card-payoff-calculator/">credit card payoff calculator</a> shows how fast you can.</li>
+      <li><strong>You'd miss an employer match.</strong> A 50–100% match in a 401(k) is an instant 50–100% return. Capture it before prepaying.</li>
+      <li><strong>You have no emergency fund.</strong> Money sent to the mortgage is hard to get back. Build 3–6 months of expenses first (<a href="/tools/emergency-fund-calculator/">calculate your target</a>).</li>
+      <li><strong>Your rate is very low.</strong> If you locked in 3% in 2021, the case for investing instead is strong.</li>
+    </ul>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>Is it better to pay extra on my mortgage or invest the money?</summary>
+      <div class="faq-a">It depends on your mortgage rate versus your expected investment return. Paying extra earns a guaranteed, tax-free return equal to your interest rate. At 7%, prepaying is hard to beat safely; at 3%, long-term index investing has historically returned more. Many people capture their employer 401(k) match first, then put extra cash toward the mortgage.</div>
+    </details>
+    <details>
+      <summary>Do extra mortgage payments go toward principal automatically?</summary>
+      <div class="faq-a">Not always. Some servicers apply extra money to next month's payment unless you specify otherwise. Mark extra payments as "apply to principal" and verify on your next statement that the balance dropped by the full amount.</div>
+    </details>
+    <details>
+      <summary>Does paying off a mortgage early have a penalty?</summary>
+      <div class="faq-a">Most U.S. mortgages originated after 2014 have no prepayment penalty due to Qualified Mortgage rules. Some jumbo, investment-property, or non-QM loans may charge one in the first 3 years — check your promissory note or ask your servicer.</div>
+    </details>
+    <details>
+      <summary>How much difference does one extra payment a year make?</summary>
+      <div class="faq-a">One extra monthly payment per year (what biweekly payments accomplish) typically shortens a 30-year mortgage by 4–6 years. On a $300,000 loan at 6.5%, that's roughly $70,000 of interest saved.</div>
+    </details>
+    <details>
+      <summary>Should I recast my mortgage after a lump-sum payment?</summary>
+      <div class="faq-a">A recast lowers your required payment (keeping the term) after a big principal payment, usually for $150–$500. Recast if you want payment flexibility; skip it and keep paying the same amount if you want the fastest payoff.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/loan-amortization-calculator/"><div class="t">Loan Amortization Calculator</div><div class="d">Full year-by-year payment schedule for any loan.</div></a>
+      <a class="tool-card" href="/tools/home-affordability-calculator/"><div class="t">Home Affordability Calculator</div><div class="d">How much house can you afford on your income?</div></a>
+      <a class="tool-card" href="/tools/dti-calculator/"><div class="t">DTI Calculator</div><div class="d">The debt-to-income ratio lenders check first.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function calc() {
+  const balance = num("balance");
+  const rate = num("rate");
+  const years = num("years");
+  const extra = num("extra");
+  const lump = num("lump");
+  const months = Math.round(years * 12);
+
+  const payment = pmt(balance, rate, months);
+  if (!isFinite(payment) || balance <= 0 || months <= 0) return;
+
+  const base = amortize(balance, rate, payment, 0);
+  const withExtraBalance = Math.max(balance - lump, 0);
+  const better = amortize(withExtraBalance, rate, payment, extra);
+  // Interest saved compares total cost including the lump reducing principal up front.
+  const saved = base.totalInterest - better.totalInterest;
+
+  $("payment").textContent = fmtUSD2(payment);
+  $("saved").textContent = fmtUSD(Math.max(saved, 0));
+  $("savedSub").textContent = (extra > 0 || lump > 0)
+    ? "by paying " + (extra > 0 ? fmtUSD(extra) + "/mo extra" : "") + (extra > 0 && lump > 0 ? " plus " : "") + (lump > 0 ? "a " + fmtUSD(lump) + " lump sum" : "")
+    : "add an extra payment above to see savings";
+  $("timeSaved").textContent = fmtMonths(base.months - better.months);
+  $("origTime").textContent = fmtMonths(base.months);
+  $("newTime").textContent = fmtMonths(better.months);
+  $("origInterest").textContent = fmtUSD(base.totalInterest);
+  $("newInterest").textContent = fmtUSD(better.totalInterest);
+  renderYearlyTable("schedule", better.rows);
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compound Interest Calculator — With Monthly Contributions</title>
+<meta name="description" content="Free compound interest calculator with monthly contributions. See exactly how your money grows, year by year, and how much of the final balance is pure interest.">
+<link rel="canonical" href="https://walletcalcs.com/tools/compound-interest-calculator/">
+<meta property="og:title" content="Compound Interest Calculator">
+<meta property="og:description" content="Watch contributions snowball with monthly compounding and regular deposits.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/compound-interest-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Compound Interest Calculator",
+      "url": "https://walletcalcs.com/tools/compound-interest-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Calculate compound growth of an initial deposit plus monthly contributions, with a year-by-year breakdown."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Compound Interest Calculator", "item": "https://walletcalcs.com/tools/compound-interest-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is compound interest in simple terms?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Compound interest is interest earned on interest. Year one, you earn interest on your deposit. Year two, you earn interest on the deposit plus year one's interest, and so on. The growth curve starts slow and steepens: at 7%, money doubles about every 10 years — so 40 years produces not 4x but roughly 16x." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Rule of 72?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A mental shortcut for doubling time: divide 72 by the annual return to get the years needed to double. At 6%, money doubles in about 12 years; at 9%, about 8 years. It also works in reverse for inflation — at 3% inflation, prices double (and cash halves in value) in about 24 years." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does compounding frequency matter much?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Less than most people think. $10,000 at 5% for 10 years grows to $16,289 with annual compounding and $16,470 with monthly — about 1% difference in the outcome. The rate, the time horizon, and your contribution amount dominate. Frequency mostly matters for comparing bank APY offers, where the quoted APY already includes it." }
+        },
+        {
+          "@type": "Question",
+          "name": "Where do I actually earn compound growth?",
+          "acceptedAnswer": { "@type": "Answer", "text": "High-yield savings accounts and CDs compound cash safely at rates that roughly track the Fed. Bonds compound through reinvested coupons. Stocks compound through reinvested dividends and retained earnings — historically the highest long-run rate (~10% nominal) but with deep swings. Tax-advantaged accounts like a 401(k) or IRA supercharge all of these by removing the annual tax drag." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Compound Interest Calculator</nav>
+  <h1 class="page-title">Compound Interest Calculator</h1>
+  <p class="page-subtitle">Start with any amount, add monthly deposits, and watch the year-by-year snowball — including exactly how much of the final balance is pure interest.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="principal">Starting amount</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="principal" value="10000" min="0" step="500"></div>
+        </div>
+        <div class="field">
+          <label for="monthly">Monthly contribution</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="monthly" value="500" min="0" step="50"></div>
+        </div>
+        <div class="field">
+          <label for="rate">Annual return</label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="rate" value="7" min="0" max="20" step="0.25"></div>
+        </div>
+        <div class="field">
+          <label for="years">Time horizon <span class="hint">(years)</span></label>
+          <div class="input-wrap"><input type="number" id="years" value="20" min="1" max="60" step="1"></div>
+        </div>
+        <div class="field full">
+          <label for="freq">Compounding frequency</label>
+          <select id="freq">
+            <option value="12" selected>Monthly</option>
+            <option value="4">Quarterly</option>
+            <option value="1">Annually</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Future balance</div>
+        <div class="value" id="final">—</div>
+        <div class="sub" id="finalSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Total contributed</span><span class="v" id="contributed">—</span></div>
+        <div class="result-row"><span class="k">Interest earned</span><span class="v" id="interest">—</span></div>
+        <div class="result-row"><span class="k">Interest share of balance</span><span class="v" id="interestShare">—</span></div>
+        <div class="result-row"><span class="k">Doubling time (Rule of 72)</span><span class="v" id="doubling">—</span></div>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Year</th><th>Contributed (cumulative)</th><th>Interest (cumulative)</th><th>Balance</th></tr></thead>
+          <tbody id="schedule"></tbody>
+        </table>
+      </div>
+      <p class="result-note">Nominal dollars, constant return. Real markets fluctuate around the average.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>Why the curve bends upward</h2>
+    <p>Compound growth has a shape: flat, then gently rising, then steep. The reason is that interest starts earning its own interest. In the early years, your deposits do the heavy lifting; in the later years, growth takes over. Run 20+ year horizons in the table above and find the crossover — the year cumulative interest overtakes cumulative contributions. For a $500/month saver at 7%, that happens around year 17–18. After that point, <strong>the account earns more each year than you put in</strong>.</p>
+
+    <h2>The formula (and what actually matters)</h2>
+    <div class="formula">FV = P(1 + r/n)<sup>nt</sup> + PMT × [((1 + r/n)<sup>nt</sup> − 1) ÷ (r/n)]</div>
+    <p>P is the starting amount, PMT the periodic deposit, r the annual rate, n compounds per year, t years. But don't let the algebra obscure the hierarchy of what moves the result:</p>
+    <ol>
+      <li><strong>Time (t) — exponential.</strong> It's in the exponent. Ten extra years does more than doubling your deposit ever will.</li>
+      <li><strong>Rate (r) — exponential, but mostly out of your hands.</strong> The market pays what it pays; your controllable rate lever is minimizing fees and taxes.</li>
+      <li><strong>Contributions (PMT) — linear, and fully in your hands.</strong> The dial to turn when you can't add years.</li>
+      <li><strong>Frequency (n) — nearly irrelevant.</strong> Monthly vs. annual compounding changes the outcome by roughly 1% over a decade.</li>
+    </ol>
+
+    <h2>Three honest scenarios</h2>
+    <table>
+      <tr><th>Saver</th><th>Inputs</th><th>Balance at 65 (7%/yr)</th></tr>
+      <tr><td>Early starter</td><td>$300/mo from age 25 (40 years)</td><td>~$787,000</td></tr>
+      <tr><td>Doubled, but late</td><td>$600/mo from age 35 (30 years)</td><td>~$732,000</td></tr>
+      <tr><td>Lump + steady</td><td>$50,000 at 35, plus $500/mo</td><td>~$1,016,000</td></tr>
+    </table>
+    <p>Numbers are nominal, monthly compounding. Read the first two rows again: the late starter contributes <strong>$72,000 more</strong> out of pocket ($216k vs $144k) and still ends up behind. The calendar is the strongest force in the table — which is why <a href="/tools/401k-calculator/">401(k) contributions</a> in your 20s and 30s punch far above their weight.</p>
+
+    <h2>Compounding works against you too</h2>
+    <p>The same math runs in reverse on debt. A credit card at 22% APR compounds monthly against you — that's a doubling time of about 3.3 years on an unpaid balance. It's why paying down high-rate debt is often the best "investment" available (see the <a href="/tools/credit-card-payoff-calculator/">credit card payoff calculator</a>), and why inflation quietly halves uninvested cash every generation. The Rule of 72 cuts both ways: at 3% inflation, the purchasing power of cash under a mattress halves in ~24 years.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>What is compound interest in simple terms?</summary>
+      <div class="faq-a">Interest earned on interest. Each year's growth joins the principal and earns its own growth. At 7%, money doubles about every 10 years — so 40 years produces roughly 16x, not 4x.</div>
+    </details>
+    <details>
+      <summary>What is the Rule of 72?</summary>
+      <div class="faq-a">Divide 72 by the annual return to estimate doubling time: 12 years at 6%, 8 years at 9%. It works for inflation too — at 3%, prices double in about 24 years.</div>
+    </details>
+    <details>
+      <summary>Does compounding frequency matter much?</summary>
+      <div class="faq-a">Barely. Monthly vs. annual compounding on $10,000 at 5% over 10 years differs by about 1%. Rate, time, and contributions dominate; frequency mainly matters when comparing bank APY quotes.</div>
+    </details>
+    <details>
+      <summary>Where do I actually earn compound growth?</summary>
+      <div class="faq-a">Savings accounts and CDs (safe, moderate), bonds (reinvested coupons), and stocks (reinvested dividends and retained earnings — highest long-run rate, biggest swings). Tax-advantaged accounts amplify all of them by removing annual tax drag.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/401k-calculator/"><div class="t">401(k) Calculator</div><div class="d">Compounding plus employer match.</div></a>
+      <a class="tool-card" href="/tools/retirement-withdrawal-calculator/"><div class="t">Retirement Withdrawal Calculator</div><div class="d">The decumulation side of the curve.</div></a>
+      <a class="tool-card" href="/tools/savings-goal-calculator/"><div class="t">Savings Goal Calculator</div><div class="d">Work backwards from a target.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function calc() {
+  const principal = num("principal");
+  const monthly = num("monthly");
+  const rate = num("rate");
+  const years = num("years");
+  const n = num("freq", 12); // compounds per year
+  if (years <= 0) return;
+
+  const periodsPerYear = 12; // deposits are monthly regardless of compounding
+  let bal = principal, contributed = principal, interest = 0;
+  const rows = [];
+  // simulate monthly; apply compounding at the chosen frequency
+  const monthsPerCompound = 12 / n;
+  let accrualBase = 0, monthCount = 0;
+  const periodRate = rate / 100 / n;
+
+  for (let y = 1; y <= years; y++) {
+    for (let m = 1; m <= 12; m++) {
+      bal += monthly;
+      contributed += monthly;
+      monthCount++;
+      if (monthCount % monthsPerCompound === 0) {
+        const gain = bal * periodRate;
+        bal += gain;
+        interest += gain;
+      }
+    }
+    if (y <= 40 || y === years) rows.push({ year: y, contributed, interest, balance: bal });
+  }
+
+  $("final").textContent = fmtUSD(bal);
+  $("finalSub").textContent = "after " + years + " years at " + rate + "% (" + $("freq").options[$("freq").selectedIndex].text.toLowerCase() + " compounding)";
+  $("contributed").textContent = fmtUSD(contributed);
+  $("interest").textContent = fmtUSD(interest);
+  $("interestShare").textContent = bal > 0 ? fmtPct(interest / bal * 100, 0) : "—";
+  $("doubling").textContent = rate > 0 ? (72 / rate).toFixed(1) + " years" : "—";
+
+  $("schedule").innerHTML = rows.map((r) =>
+    "<tr><td>Year " + r.year + "</td><td>" + fmtUSD(r.contributed) + "</td><td>" + fmtUSD(r.interest) + "</td><td>" + fmtUSD(r.balance) + "</td></tr>"
+  ).join("");
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

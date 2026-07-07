@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credit Card Payoff Calculator — How Fast Can You Be Debt-Free?</title>
+<meta name="description" content="Free credit card payoff calculator. See how long your balance will take to pay off, what it costs in interest, and how much a bigger payment speeds things up.">
+<link rel="canonical" href="https://walletcalcs.com/tools/credit-card-payoff-calculator/">
+<meta property="og:title" content="Credit Card Payoff Calculator">
+<meta property="og:description" content="How long until you're free of the balance — and what minimum payments really cost.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/credit-card-payoff-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Credit Card Payoff Calculator",
+      "url": "https://walletcalcs.com/tools/credit-card-payoff-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Calculate how long a credit card balance takes to pay off at a given monthly payment, and the total interest cost."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Credit Card Payoff Calculator", "item": "https://walletcalcs.com/tools/credit-card-payoff-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does paying only the minimum take so long?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Minimum payments are typically set at 1–3% of the balance plus interest, and they shrink as the balance shrinks. Because the payment falls along with the balance, the payoff stretches for decades. A $5,000 balance at 22% APR paid with typical minimums can take over 15 years and cost more in interest than the original balance. Paying a fixed amount instead of the shrinking minimum breaks that pattern." }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I pay off cards with the snowball or avalanche method?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Avalanche (highest APR first) is mathematically optimal and minimizes total interest. Snowball (smallest balance first) gives quicker psychological wins that help many people stay on track. The interest difference is often modest; the best method is the one you'll actually stick with. Either way, pay minimums on all cards and send every extra dollar to the one target card." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a 0% balance transfer worth it?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Often yes, if you have the credit score to qualify and a real payoff plan. A typical offer is 0% APR for 12–21 months with a 3–5% transfer fee. On a $6,000 balance, a 3% fee ($180) is far less than a year of interest at 22% (about $1,200). The trap: if you don't clear the balance before the promo ends, the regular APR applies to what's left — treat the promo period as a deadline." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does paying off a credit card improve my credit score?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Usually, and often quickly. Credit utilization — your balances relative to limits — is a major scoring factor, and unlike late payments it has no memory: when utilization drops, scores typically respond within one or two statement cycles. Keep the paid-off card open; closing it reduces your available credit and can raise utilization on remaining cards." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Credit Card Payoff Calculator</nav>
+  <h1 class="page-title">Credit Card Payoff Calculator</h1>
+  <p class="page-subtitle">Enter your balance, APR, and monthly payment to see your debt-free date — and how much faster a bigger payment gets you there.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="balance">Current balance</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="balance" value="5000" min="0" step="100"></div>
+        </div>
+        <div class="field">
+          <label for="apr">APR <span class="hint">(annual rate)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="apr" value="22" min="0" max="40" step="0.1"></div>
+        </div>
+        <div class="field">
+          <label for="payment">Monthly payment</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="payment" value="200" min="0" step="10"></div>
+        </div>
+        <div class="field">
+          <label for="boost">What if I paid this much more? <span class="hint">(optional)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="boost" value="100" min="0" step="10"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Time to pay off</div>
+        <div class="value" id="months">—</div>
+        <div class="sub" id="monthsSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Total interest paid</span><span class="v" id="interest">—</span></div>
+        <div class="result-row"><span class="k">Total paid</span><span class="v" id="total">—</span></div>
+        <div class="result-row"><span class="k">With bigger payment: payoff in</span><span class="v" id="boostMonths">—</span></div>
+        <div class="result-row"><span class="k">With bigger payment: interest saved</span><span class="v" id="boostSaved">—</span></div>
+      </div>
+      <p class="result-note" id="warn"></p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>The one number card issuers hope you never calculate</h2>
+    <p>Credit card interest compounds against you monthly at rates that dwarf every other consumer debt. At 22% APR, a $5,000 balance accrues about $92 in interest in the first month. Pay $200 and only $108 actually reduces the debt. That's why balances feel immovable: <strong>more than 40% of a typical payment can be eaten by interest</strong> before a single dollar touches principal.</p>
+    <p>The calculator runs your balance forward month by month: each month it adds interest (APR ÷ 12 × balance), subtracts your payment, and repeats until the balance hits zero.</p>
+
+    <h2>The minimum payment trap, quantified</h2>
+    <p>Issuers typically set minimums at 1–2% of the balance plus that month's interest. Because the minimum shrinks as the balance falls, the payoff timeline stretches absurdly:</p>
+    <table>
+      <tr><th>Strategy on $5,000 at 22%</th><th>Payoff time</th><th>Total interest</th></tr>
+      <tr><td>Shrinking minimum (interest + 1%)</td><td>20+ years</td><td>~$7,700</td></tr>
+      <tr><td>Fixed $200/month</td><td>2 yr 9 mo</td><td>~$1,600</td></tr>
+      <tr><td>Fixed $300/month</td><td>1 yr 8 mo</td><td>~$950</td></tr>
+    </table>
+    <p>The single most powerful move costs nothing: <strong>convert your shrinking minimum into a fixed payment</strong>. Even paying today's minimum amount every month — without ever letting it decrease — cuts the payoff time dramatically.</p>
+
+    <h2>A payoff plan that works in practice</h2>
+    <ol>
+      <li><strong>Stop adding to the balance.</strong> Move day-to-day spending to a debit card until the balance is cleared. A balance you keep charging against can't be paid off.</li>
+      <li><strong>Fix your payment amount.</strong> Pick the largest number you can sustain and automate it for a few days after each payday.</li>
+      <li><strong>If you hold several cards, pick an order.</strong> Highest APR first (avalanche) saves the most interest; smallest balance first (snowball) builds momentum. Pay minimums on the rest either way.</li>
+      <li><strong>Consider a 0% balance transfer</strong> if your credit allows. A 3–5% fee buys 12–21 months where 100% of your payment hits principal — but set the payment so the balance reaches zero before the promo expires.</li>
+      <li><strong>Redirect the payment when you're done.</strong> The habit is the hard part; once the card is cleared, send the same amount to savings — a <a href="/tools/emergency-fund-calculator/">funded emergency cushion</a> is what prevents the next balance.</li>
+    </ol>
+
+    <h2>Where a personal loan fits</h2>
+    <p>Debt consolidation loans run far below card APRs for good-credit borrowers. Consolidating makes sense when the loan rate is meaningfully lower <em>and</em> the fixed term forces payoff. Use our <a href="/tools/loan-amortization-calculator/">loan amortization calculator</a> to compare the consolidation payment against your card payoff plan. The risk isn't the loan — it's clearing the cards and then charging them up again.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>Why does paying only the minimum take so long?</summary>
+      <div class="faq-a">Minimums are set at roughly 1–3% of the balance plus interest and shrink as the balance shrinks, stretching payoff over decades. A $5,000 balance at 22% APR on typical minimums can take 15–20+ years. Paying a fixed amount instead breaks the pattern.</div>
+    </details>
+    <details>
+      <summary>Should I pay off cards with the snowball or avalanche method?</summary>
+      <div class="faq-a">Avalanche (highest APR first) minimizes total interest; snowball (smallest balance first) gives faster wins that keep people motivated. The difference is often modest — pick the one you'll stick with and funnel every extra dollar to one target card.</div>
+    </details>
+    <details>
+      <summary>Is a 0% balance transfer worth it?</summary>
+      <div class="faq-a">Often yes: a 3–5% transfer fee is usually far cheaper than a year of 22% interest. The trap is not clearing the balance before the promo period (12–21 months) ends — set your monthly payment so it hits zero in time.</div>
+    </details>
+    <details>
+      <summary>Does paying off a credit card improve my credit score?</summary>
+      <div class="faq-a">Usually, and within one or two statement cycles, because utilization (balances ÷ limits) is a major factor with no memory. Keep the paid-off card open to preserve your available credit.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/dti-calculator/"><div class="t">DTI Calculator</div><div class="d">How your debt load looks to lenders.</div></a>
+      <a class="tool-card" href="/tools/loan-amortization-calculator/"><div class="t">Loan Amortization Calculator</div><div class="d">Compare a consolidation loan.</div></a>
+      <a class="tool-card" href="/tools/emergency-fund-calculator/"><div class="t">Emergency Fund Calculator</div><div class="d">Build the cushion that prevents new debt.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function payoff(balance, apr, payment) {
+  const r = apr / 100 / 12;
+  let bal = balance, interest = 0, m = 0;
+  if (payment <= bal * r) return { months: Infinity, interest: Infinity };
+  while (bal > 0.005 && m < 1200) {
+    m++;
+    const i = bal * r;
+    interest += i;
+    bal = bal + i - payment;
+  }
+  return { months: m, interest };
+}
+
+function calc() {
+  const balance = num("balance");
+  const apr = num("apr");
+  const payment = num("payment");
+  const boost = num("boost");
+  if (balance <= 0 || payment <= 0) return;
+
+  const base = payoff(balance, apr, payment);
+  const warnEl = $("warn");
+
+  if (!isFinite(base.months)) {
+    $("months").textContent = "Never";
+    $("monthsSub").textContent = "";
+    $("interest").textContent = "—";
+    $("total").textContent = "—";
+    warnEl.textContent = "Your payment doesn't cover the monthly interest (" + fmtUSD2(balance * apr / 1200) + "), so the balance grows instead of shrinking. Increase the payment above that amount.";
+  } else {
+    $("months").textContent = fmtMonths(base.months);
+    $("monthsSub").textContent = "paying " + fmtUSD(payment) + "/month at " + apr + "% APR";
+    $("interest").textContent = fmtUSD(base.interest);
+    $("total").textContent = fmtUSD(balance + base.interest);
+    warnEl.textContent = "Assumes no new charges are added to the card.";
+  }
+
+  if (boost > 0) {
+    const b = payoff(balance, apr, payment + boost);
+    $("boostMonths").textContent = isFinite(b.months) ? fmtMonths(b.months) : "—";
+    $("boostSaved").textContent = (isFinite(base.interest) && isFinite(b.interest)) ? fmtUSD(base.interest - b.interest) : "—";
+  } else {
+    $("boostMonths").textContent = "—";
+    $("boostSaved").textContent = "—";
+  }
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

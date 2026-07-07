@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Fund Calculator — Your Target Number and a Plan to Hit It</title>
+<meta name="description" content="Free emergency fund calculator. Get a personalized savings target based on your expenses and job stability, plus a monthly plan and timeline to fully fund it.">
+<link rel="canonical" href="https://walletcalcs.com/tools/emergency-fund-calculator/">
+<meta property="og:title" content="Emergency Fund Calculator">
+<meta property="og:description" content="Your personal emergency fund target and a monthly plan to reach it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/emergency-fund-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Emergency Fund Calculator",
+      "url": "https://walletcalcs.com/tools/emergency-fund-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Calculate a personalized emergency fund target and the monthly savings plan to reach it."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Emergency Fund Calculator", "item": "https://walletcalcs.com/tools/emergency-fund-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many months of expenses should an emergency fund cover?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Three to six months of essential expenses is the standard range. Lean toward three with a stable salaried job, two incomes, and good insurance; lean toward six or more with variable income, self-employment, a single-income household, dependents, or a specialized job that takes longer to replace. Freelancers and commission earners often target 6–12 months." }
+        },
+        {
+          "@type": "Question",
+          "name": "Where should I keep my emergency fund?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Somewhere safe, liquid, and boring: a high-yield savings account or money market fund. It should earn interest (rates have been meaningfully above zero since 2022) but never be invested in stocks — an emergency that coincides with a 30% market drop would force selling at the worst time. Keep it at a different bank than your checking to reduce the temptation to dip in." }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I build an emergency fund before paying off debt?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Build a starter fund first — commonly $1,000 to one month of expenses — then attack high-interest debt, then finish the full 3–6 month fund. The starter fund exists so a car repair doesn't go straight onto a 22% credit card and undo your progress. Mathematically, paying 22% debt beats earning 4% in savings, but only if you have enough cushion to stay out of new debt." }
+        },
+        {
+          "@type": "Question",
+          "name": "What counts as an emergency?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Unexpected, necessary, and urgent — all three. Job loss, medical bills, essential car or home repairs qualify. Vacations, holiday gifts, and planned expenses don't; those belong in separate sinking funds. A useful test: if it was predictable (car tires wear out, roofs age), it's a budgeting item, not an emergency — though the fund still catches you when budgeting falls short." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Emergency Fund Calculator</nav>
+  <h1 class="page-title">Emergency Fund Calculator</h1>
+  <p class="page-subtitle">A personalized target based on your actual expenses and job situation — plus how long it takes to get there at your savings pace.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="expenses">Essential monthly expenses <span class="hint">(housing, food, utilities, insurance, minimum debt payments)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="expenses" value="3500" min="0" step="100"></div>
+        </div>
+        <div class="field">
+          <label for="situation">Income situation</label>
+          <select id="situation">
+            <option value="3">Very stable — two steady incomes</option>
+            <option value="4" selected>Stable — one steady salaried income</option>
+            <option value="6">Variable — commission, hourly, or niche role</option>
+            <option value="9">Self-employed / freelance</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="current">Already saved</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="current" value="4000" min="0" step="500"></div>
+        </div>
+        <div class="field">
+          <label for="monthly">Monthly amount you can save</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="monthly" value="400" min="0" step="50"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Your emergency fund target</div>
+        <div class="value" id="target">—</div>
+        <div class="sub" id="targetSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Still to save</span><span class="v" id="gap">—</span></div>
+        <div class="result-row"><span class="k">Fully funded in</span><span class="v" id="timeline">—</span></div>
+        <div class="result-row"><span class="k">Starter milestone (1 month)</span><span class="v" id="starter">—</span></div>
+        <div class="result-row"><span class="k">Current coverage</span><span class="v" id="coverage">—</span></div>
+      </div>
+      <p class="result-note">Based on essential expenses only — an emergency budget drops the extras automatically.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>Why the target is months, not a dollar figure</h2>
+    <p>The point of an emergency fund is time: how many months you can pay for essentials with zero income while you find a job, recover, or fix the crisis. That's why the target scales with <em>your</em> expenses, not a universal number — $10,000 is four months of runway for one household and five weeks for another.</p>
+    <p>Count only essentials: housing, utilities, groceries, insurance, transportation, and minimum debt payments. In a real emergency the streaming services and restaurants pause, so a fund sized on your full lifestyle spending overshoots — pleasant, but it delays other goals.</p>
+
+    <h2>How many months you specifically need</h2>
+    <table>
+      <tr><th>Situation</th><th>Suggested target</th><th>Why</th></tr>
+      <tr><td>Two stable incomes</td><td>3 months</td><td>Both incomes vanishing at once is unlikely; each covers part of the essentials.</td></tr>
+      <tr><td>One stable salaried income</td><td>4–6 months</td><td>Single point of failure; typical job searches run 3–5 months.</td></tr>
+      <tr><td>Variable income</td><td>6 months</td><td>The fund also smooths normal income dips, so it's drawn on more often.</td></tr>
+      <tr><td>Self-employed / freelance</td><td>6–12 months</td><td>No unemployment insurance, lumpy revenue, and business dry spells can run long.</td></tr>
+    </table>
+    <p>Add a month or two for dependents, a mortgage on one income, chronic health conditions, or a highly specialized role that takes longer to replace.</p>
+
+    <h2>Building it without hating the process</h2>
+    <ol>
+      <li><strong>Hit the starter milestone first.</strong> One month of essentials (even $1,000) is the threshold where most small crises stop becoming credit card debt. If you carry high-interest balances, pause here, <a href="/tools/credit-card-payoff-calculator/">clear the cards</a>, then resume.</li>
+      <li><strong>Automate on payday.</strong> A standing transfer the day your paycheck lands beats willpower every month. Even $200/month reaches a starter fund inside a year.</li>
+      <li><strong>Bank it somewhere slightly inconvenient.</strong> A high-yield savings account at a <em>different</em> bank earns real interest and adds a day of friction between impulse and withdrawal.</li>
+      <li><strong>Route windfalls.</strong> Tax refunds, bonuses, and side income can compress the timeline by months — the calculator above shows exactly how much.</li>
+      <li><strong>Refill before resuming other goals.</strong> After a withdrawal, the fund is the first priority again. That discipline is what makes it permanent.</li>
+    </ol>
+
+    <h2>Where the fund fits in the bigger picture</h2>
+    <p>The emergency fund is the foundation everything else stands on: it's what lets you <a href="/tools/mortgage-payoff-calculator/">prepay a mortgage</a> or max a <a href="/tools/401k-calculator/">401(k)</a> without fear, because surprises no longer force you to unwind those moves at a loss. Once it's fully funded, redirect the same automated transfer toward your next goal — the <a href="/tools/savings-goal-calculator/">savings goal calculator</a> picks up exactly where this one leaves off.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>How many months of expenses should an emergency fund cover?</summary>
+      <div class="faq-a">3–6 months of essentials is standard: three with two stable incomes, six or more with variable income, one income, or dependents. Freelancers often target 6–12 months.</div>
+    </details>
+    <details>
+      <summary>Where should I keep my emergency fund?</summary>
+      <div class="faq-a">A high-yield savings account or money market fund — safe, liquid, earning interest, and never in stocks. A different bank than your checking adds useful friction.</div>
+    </details>
+    <details>
+      <summary>Should I build an emergency fund before paying off debt?</summary>
+      <div class="faq-a">Starter fund first ($1,000 to one month of expenses), then high-interest debt, then the full fund. The starter cushion keeps new emergencies off the 22% credit card.</div>
+    </details>
+    <details>
+      <summary>What counts as an emergency?</summary>
+      <div class="faq-a">Unexpected, necessary, and urgent — job loss, medical bills, essential repairs. Predictable costs (tires, gifts, vacations) belong in sinking funds, not the emergency fund.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/savings-goal-calculator/"><div class="t">Savings Goal Calculator</div><div class="d">The next goal after the fund is full.</div></a>
+      <a class="tool-card" href="/tools/credit-card-payoff-calculator/"><div class="t">Credit Card Payoff Calculator</div><div class="d">Clear high-interest debt in parallel.</div></a>
+      <a class="tool-card" href="/tools/self-employment-tax-calculator/"><div class="t">Self-Employment Tax Calculator</div><div class="d">Freelancers: know your tax set-aside too.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function calc() {
+  const expenses = num("expenses");
+  const months = num("situation", 4);
+  const current = num("current");
+  const monthly = num("monthly");
+  if (expenses <= 0) return;
+
+  const target = expenses * months;
+  const gap = Math.max(target - current, 0);
+
+  $("target").textContent = fmtUSD(target);
+  $("targetSub").textContent = months + " months of essential expenses";
+  $("gap").textContent = fmtUSD(gap);
+  $("timeline").textContent = gap === 0 ? "Fully funded ✓" : (monthly > 0 ? fmtMonths(Math.ceil(gap / monthly)) : "—");
+  $("starter").textContent = fmtUSD(expenses) + (current >= expenses ? " ✓ reached" : "");
+  $("coverage").textContent = (current / expenses).toFixed(1) + " months";
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

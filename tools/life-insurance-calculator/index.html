@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Insurance Calculator — How Much Coverage Do You Actually Need?</title>
+<meta name="description" content="Free life insurance needs calculator using the DIME method. Add up debts, income replacement, mortgage, and education costs to get a coverage number you can defend.">
+<link rel="canonical" href="https://walletcalcs.com/tools/life-insurance-calculator/">
+<meta property="og:title" content="Life Insurance Needs Calculator">
+<meta property="og:description" content="How much coverage your family actually needs, using the DIME method.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/life-insurance-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Life Insurance Needs Calculator",
+      "url": "https://walletcalcs.com/tools/life-insurance-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Calculate life insurance coverage needs using the DIME method: debts, income replacement, mortgage, and education."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Life Insurance Calculator", "item": "https://walletcalcs.com/tools/life-insurance-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is term or whole life insurance better?",
+          "acceptedAnswer": { "@type": "Answer", "text": "For pure income protection, term life wins for most families: it costs roughly 5–15x less than whole life for the same death benefit, and the need it covers (dependents, mortgage, working years) is itself temporary. Whole life adds a savings component with high internal costs and makes sense mainly for permanent needs — estate planning, a lifelong dependent, or business succession. The common guidance: buy term, invest the premium difference." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does term life insurance cost?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Less than most people guess. A healthy 35-year-old can typically buy a $500,000, 20-year term policy for roughly $25–$40 per month; a 45-year-old pays about 2–3x that. Price rises steeply with age and health issues, which is the argument for locking in a long term while young and healthy." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do stay-at-home parents need life insurance?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. A stay-at-home parent's death creates real replacement costs — childcare, transportation, household management — commonly estimated at $30,000–$60,000 per year until children are independent. A modest term policy ($250,000–$500,000) on the non-earning spouse is inexpensive and covers a genuine financial exposure." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the life insurance from my job enough?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Rarely. Employer group coverage is typically 1–2x salary — a fraction of the 8–12x that families with dependents usually need — and it usually ends when you leave the job, exactly when a health change might make new coverage expensive. Treat group coverage as a supplement and own an individual term policy as the base." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Life Insurance Calculator</nav>
+  <h1 class="page-title">Life Insurance Needs Calculator</h1>
+  <p class="page-subtitle">Skip the "10x your salary" guess. The DIME method adds up what your family would actually face — Debts, Income, Mortgage, Education — and nets out what you already have.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="debts">Debts <span class="hint">(cards, loans — not the mortgage)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="debts" value="20000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="funeral">Final expenses <span class="hint">(funeral, medical)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="funeral" value="15000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="income">Annual income to replace</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="income" value="75000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="years">Years of income replacement</label>
+          <div class="input-wrap"><input type="number" id="years" value="10" min="0" max="30" step="1"></div>
+        </div>
+        <div class="field">
+          <label for="mortgage">Mortgage balance to clear</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="mortgage" value="250000" min="0" step="5000"></div>
+        </div>
+        <div class="field">
+          <label for="kids">Children needing education funding</label>
+          <div class="input-wrap"><input type="number" id="kids" value="2" min="0" max="10" step="1"></div>
+        </div>
+        <div class="field">
+          <label for="perKid">Education fund per child</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="perKid" value="100000" min="0" step="5000"></div>
+        </div>
+        <div class="field">
+          <label for="existing">Existing coverage &amp; liquid savings</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="existing" value="100000" min="0" step="5000"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Coverage you need</div>
+        <div class="value" id="need">—</div>
+        <div class="sub" id="needSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">D — Debts &amp; final expenses</span><span class="v" id="dPart">—</span></div>
+        <div class="result-row"><span class="k">I — Income replacement</span><span class="v" id="iPart">—</span></div>
+        <div class="result-row"><span class="k">M — Mortgage payoff</span><span class="v" id="mPart">—</span></div>
+        <div class="result-row"><span class="k">E — Education funding</span><span class="v" id="ePart">—</span></div>
+        <div class="result-row"><span class="k">Gross need</span><span class="v" id="gross">—</span></div>
+        <div class="result-row"><span class="k">Minus existing resources</span><span class="v" id="minus">—</span></div>
+      </div>
+      <p class="result-note">Round up to the nearest policy tier ($250k / $500k / $750k / $1M) — pricing tiers often make more coverage barely more expensive.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>Why "10x your salary" isn't a plan</h2>
+    <p>Salary multiples ignore the things that actually vary between families: whether you rent or carry a $400,000 mortgage, whether you have one child or four, whether your spouse earns. Two households with identical salaries can need wildly different coverage. The <strong>DIME method</strong> replaces the guess with four concrete line items:</p>
+    <ul>
+      <li><strong>D — Debts:</strong> everything that wouldn't die with you — credit cards, car loans, personal loans — plus final expenses (a funeral alone commonly runs $8,000–$12,000).</li>
+      <li><strong>I — Income:</strong> annual income × the years your family would need support. Ten years is a common default; use the years until your youngest child is independent, or until your spouse's retirement plan can carry the household.</li>
+      <li><strong>M — Mortgage:</strong> the payoff balance, so the family keeps the home without the payment.</li>
+      <li><strong>E — Education:</strong> a fund per child. $100,000 roughly covers four years at an in-state public university today; private school ambitions push higher.</li>
+    </ul>
+    <p>Then subtract what's already in place: existing policies (including employer group coverage, with the caveat below) and liquid savings that would realistically be available.</p>
+
+    <h2>Term vs. whole life, in one honest paragraph</h2>
+    <p>Term life is pure protection: a fixed death benefit for 10–30 years, at the lowest cost per dollar of coverage. Whole life bundles insurance with a savings vehicle, costs 5–15x more for the same benefit, and its cash value grows slowly after fees. For the core job — protecting dependents during your working years — <strong>term coverage sized by DIME, with the premium savings invested</strong>, beats whole life for the overwhelming majority of households. Whole life earns its keep in narrower cases: lifelong dependents, estate-tax planning, business buy-sell agreements.</p>
+
+    <h2>Buying it right</h2>
+    <ol>
+      <li><strong>Match the term to the need.</strong> Youngest child is 3? A 20-year term covers them to adulthood. Mortgage has 25 years left? Consider 25–30 years, or a smaller second policy laddered on top.</li>
+      <li><strong>Don't rely on work coverage.</strong> Group policies are typically 1–2x salary and vanish when you change jobs — possibly when you're older or sicker. Own your base policy individually.</li>
+      <li><strong>Insure the stay-at-home parent too.</strong> Childcare and household replacement costs are real — $30,000–$60,000/year is a common estimate.</li>
+      <li><strong>Shop 3+ quotes.</strong> Pricing for identical coverage varies meaningfully between insurers, and each weighs health factors differently.</li>
+      <li><strong>Review at life events.</strong> New child, new house, divorce, big raise — each one moves your DIME number. Re-run this calculator in five minutes.</li>
+    </ol>
+    <p>Life insurance is one pillar of the safety plan; a funded <a href="/tools/emergency-fund-calculator/">emergency fund</a> handles the survivable disruptions, and a sound <a href="/tools/retirement-withdrawal-calculator/">retirement drawdown plan</a> covers the decades after the term ends.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>Is term or whole life insurance better?</summary>
+      <div class="faq-a">For income protection, term — it's 5–15x cheaper for the same benefit, and the need itself is temporary. Whole life fits permanent needs like estate planning or a lifelong dependent. Common guidance: buy term, invest the difference.</div>
+    </details>
+    <details>
+      <summary>How much does term life insurance cost?</summary>
+      <div class="faq-a">A healthy 35-year-old: roughly $25–$40/month for $500,000 of 20-year term. A 45-year-old pays 2–3x that. Prices climb steeply with age and health changes — lock in early.</div>
+    </details>
+    <details>
+      <summary>Do stay-at-home parents need life insurance?</summary>
+      <div class="faq-a">Yes — replacing childcare and household management commonly costs $30,000–$60,000/year. A $250k–$500k term policy on the non-earning spouse is cheap and covers real exposure.</div>
+    </details>
+    <details>
+      <summary>Is the life insurance from my job enough?</summary>
+      <div class="faq-a">Rarely. Group coverage is typically 1–2x salary versus the 8–12x families with dependents usually need, and it disappears when you leave the job. Treat it as a supplement.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/emergency-fund-calculator/"><div class="t">Emergency Fund Calculator</div><div class="d">The other half of the safety net.</div></a>
+      <a class="tool-card" href="/tools/mortgage-payoff-calculator/"><div class="t">Mortgage Payoff Calculator</div><div class="d">Shrink the M in your DIME number.</div></a>
+      <a class="tool-card" href="/tools/retirement-withdrawal-calculator/"><div class="t">Retirement Withdrawal Calculator</div><div class="d">The plan for after the term ends.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function calc() {
+  const d = num("debts") + num("funeral");
+  const i = num("income") * num("years");
+  const m = num("mortgage");
+  const e = num("kids") * num("perKid");
+  const existing = num("existing");
+  const gross = d + i + m + e;
+  const need = Math.max(gross - existing, 0);
+
+  $("need").textContent = fmtUSD(need);
+  $("needSub").textContent = need === 0 ? "Your existing resources cover the calculated need." : "consider a term policy at or above this amount";
+  $("dPart").textContent = fmtUSD(d);
+  $("iPart").textContent = fmtUSD(i);
+  $("mPart").textContent = fmtUSD(m);
+  $("ePart").textContent = fmtUSD(e);
+  $("gross").textContent = fmtUSD(gross);
+  $("minus").textContent = "−" + fmtUSD(existing);
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

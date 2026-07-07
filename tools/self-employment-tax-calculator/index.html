@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Employment Tax Calculator 2026 — Freelancer Federal Tax Estimate</title>
+<meta name="description" content="Free 2026 self-employment tax calculator for freelancers and 1099 contractors. Estimates SE tax, federal income tax with the QBI deduction, and your quarterly payments.">
+<link rel="canonical" href="https://walletcalcs.com/tools/self-employment-tax-calculator/">
+<meta property="og:title" content="Self-Employment Tax Calculator (2026)">
+<meta property="og:description" content="Estimate SE tax and federal income tax with current 2026 numbers, including the QBI deduction and quarterly payment amounts.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/self-employment-tax-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Self-Employment Tax Calculator 2026",
+      "url": "https://walletcalcs.com/tools/self-employment-tax-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Estimate 2026 self-employment tax and federal income tax for freelancers, including the QBI deduction and quarterly estimated payments."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Self-Employment Tax Calculator", "item": "https://walletcalcs.com/tools/self-employment-tax-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do freelancers pay more tax than employees?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Employees split Social Security and Medicare taxes with their employer — each pays 7.65%. Self-employed people pay both halves, 15.3% total, as self-employment tax. Two features soften the blow: SE tax applies to only 92.35% of net profit, and half of the SE tax is deductible from your income tax. But the headline is real: a freelancer keeps less of each dollar than a W-2 employee at the same gross pay." }
+        },
+        {
+          "@type": "Question",
+          "name": "When are quarterly estimated taxes due in 2026?",
+          "acceptedAnswer": { "@type": "Answer", "text": "For 2026 income: April 15, June 15, and September 15, 2026, and January 15, 2027. The IRS expects payment as income is earned; underpaying triggers a penalty computed like interest. The common safe harbor: pay at least 100% of last year's total tax (110% if your prior-year AGI exceeded $150,000) in even quarterly installments, and you owe no penalty regardless of what this year brings." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the QBI deduction and do I qualify?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The Qualified Business Income deduction lets most self-employed people deduct up to 20% of their business profit from taxable income. It was made permanent by 2025 legislation. Below the income thresholds (roughly $200,000 single / $400,000 joint for 2026, phased), nearly all freelancers qualify regardless of field. Above them, limits based on W-2 wages and specified service businesses apply — that's the point to involve a CPA." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much should I set aside for taxes as a freelancer?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A common rule is 25–30% of net profit for federal taxes at moderate incomes, plus your state's income tax rate if applicable. This calculator gives you a personalized number instead — divide the total by your profit to get your effective rate, and transfer that percentage of every client payment into a separate tax savings account the day it arrives." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I reduce self-employment tax with retirement contributions?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Retirement contributions (SEP-IRA, Solo 401(k)) reduce income tax but not SE tax — SE tax is computed on net profit before those deductions. The main ways to legitimately lower SE tax are maximizing business expense deductions and, at higher profits (typically $80,000+), electing S-corp taxation so only your salary portion incurs payroll tax. The S-corp route adds payroll and filing costs, so run the numbers with a CPA first." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Self-Employment Tax Calculator</nav>
+  <h1 class="page-title">Self-Employment Tax Calculator (2026)</h1>
+  <p class="page-subtitle">For freelancers, contractors, and side hustlers: estimate your federal self-employment tax and income tax with current 2026 brackets, the QBI deduction, and your quarterly payment amount.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="profit">Net self-employment profit <span class="hint">(income − expenses)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="profit" value="85000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="status">Filing status</label>
+          <select id="status">
+            <option value="single" selected>Single</option>
+            <option value="mfj">Married filing jointly</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="wages">W-2 wages, if any <span class="hint">(yours + spouse's if filing jointly)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="wages" value="0" min="0" step="1000"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Estimated total federal tax</div>
+        <div class="value" id="total">—</div>
+        <div class="sub" id="totalSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Self-employment tax (15.3%)</span><span class="v" id="seTax">—</span></div>
+        <div class="result-row"><span class="k">Federal income tax on SE income</span><span class="v" id="incomeTax">—</span></div>
+        <div class="result-row"><span class="k">QBI deduction applied</span><span class="v" id="qbi">—</span></div>
+        <div class="result-row"><span class="k">Effective rate on profit</span><span class="v" id="effRate">—</span></div>
+        <div class="result-row"><span class="k">Suggested quarterly payment</span><span class="v" id="quarterly">—</span></div>
+        <div class="result-row"><span class="k">Set aside per $1,000 earned</span><span class="v" id="perK">—</span></div>
+      </div>
+      <p class="result-note">Federal only — state income tax is not included. Uses 2026 brackets, the $16,100/$32,200 standard deduction, the $184,500 Social Security wage base, and a simplified 20% QBI deduction. Estimate for planning, not a substitute for tax software or a CPA.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>The two taxes every freelancer pays</h2>
+    <p>Self-employed income is hit by two separate federal taxes, and confusing them is the #1 source of freelancer tax surprises:</p>
+    <ul>
+      <li><strong>Self-employment (SE) tax — 15.3%.</strong> This is Social Security (12.4%) and Medicare (2.9%) combined. Employees split it with their employer; you pay both halves. It applies from the first dollar of profit — there's no standard deduction against it.</li>
+      <li><strong>Federal income tax — 10% to 37%.</strong> The same progressive brackets everyone pays, applied after the standard deduction, half of your SE tax, and the QBI deduction.</li>
+    </ul>
+    <p>This is why a freelancer with $85,000 of profit owes real money even though "the 22% bracket" sounds manageable — the 15.3% runs in parallel underneath.</p>
+
+    <h2>How the 2026 calculation works, step by step</h2>
+    <ol>
+      <li><strong>SE tax base:</strong> net profit × 92.35%. (The 7.65% haircut mirrors the employer half employees never see.)</li>
+      <li><strong>Social Security portion:</strong> 12.4% of the base, but only up to the 2026 wage cap of <strong>$184,500</strong> — and W-2 wages you earn use up that cap first.</li>
+      <li><strong>Medicare portion:</strong> 2.9% of the whole base, uncapped, plus 0.9% Additional Medicare Tax on combined earnings above $200,000 (single) / $250,000 (joint).</li>
+      <li><strong>Income tax:</strong> profit − half your SE tax − standard deduction ($16,100 single / $32,200 joint) − QBI deduction, then run through the 2026 brackets.</li>
+      <li><strong>QBI deduction:</strong> up to 20% of qualified business income — for most freelancers under the income thresholds, a straight 20% off before income tax. Made permanent by the 2025 tax law.</li>
+    </ol>
+
+    <h2>The freelancer's cash-flow system</h2>
+    <p>Knowing the number is half the job; having the cash on the due dates is the other half. The system that works:</p>
+    <ol>
+      <li><strong>Open a separate "tax" savings account.</strong> Not a category in your head — an actual account.</li>
+      <li><strong>Transfer your effective rate from every payment</strong> the day it arrives. The calculator's "per $1,000 earned" figure is exactly this number.</li>
+      <li><strong>Pay quarterly from that account:</strong> April 15, June 15, September 15, and January 15. Pay online in minutes at IRS Direct Pay.</li>
+      <li><strong>Use the safe harbor if income is lumpy:</strong> pay 100% of last year's total tax (110% if prior AGI was over $150,000) in four even installments, and no underpayment penalty applies even if you earn far more this year.</li>
+    </ol>
+
+    <h2>Deductions freelancers most often miss</h2>
+    <ul>
+      <li><strong>Home office:</strong> the simplified method is $5 per square foot up to 300 sq ft — no depreciation records needed.</li>
+      <li><strong>Health insurance premiums:</strong> deductible above-the-line for the self-employed, including spouse and dependents.</li>
+      <li><strong>Retirement plans:</strong> a Solo 401(k) shelters far more than an IRA — up to $70,000+ depending on profit — and cuts income tax now (though not SE tax). Model growth with the <a href="/tools/compound-interest-calculator/">compound interest calculator</a>.</li>
+      <li><strong>Half of SE tax:</strong> automatic, but worth knowing it exists — this calculator applies it for you.</li>
+      <li><strong>Software, mileage, professional fees, business insurance:</strong> ordinary and necessary business costs — track them year-round, not in April.</li>
+    </ul>
+    <p>Income that swings month to month makes a cash cushion non-negotiable — freelancers should target the higher end of the <a href="/tools/emergency-fund-calculator/">emergency fund range</a>.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>Why do freelancers pay more tax than employees?</summary>
+      <div class="faq-a">Employees split the 15.3% Social Security/Medicare tax with their employer; the self-employed pay both halves. Softeners: SE tax applies to 92.35% of profit, and half of it is deductible — but the net effect is still a higher burden at the same gross pay.</div>
+    </details>
+    <details>
+      <summary>When are quarterly estimated taxes due in 2026?</summary>
+      <div class="faq-a">April 15, June 15, September 15, 2026, and January 15, 2027. Underpayment triggers an interest-like penalty. Safe harbor: pay 100% of last year's tax (110% if prior AGI exceeded $150,000) in even installments.</div>
+    </details>
+    <details>
+      <summary>What is the QBI deduction and do I qualify?</summary>
+      <div class="faq-a">A deduction of up to 20% of business profit, made permanent in 2025. Below roughly $200k single / $400k joint (2026), nearly all freelancers qualify. Above that, W-2 wage and service-business limits kick in — CPA territory.</div>
+    </details>
+    <details>
+      <summary>How much should I set aside for taxes as a freelancer?</summary>
+      <div class="faq-a">Rule of thumb: 25–30% of net profit for federal at moderate incomes, plus state tax. Better: use this calculator's effective rate and auto-transfer that share of every client payment to a separate tax account.</div>
+    </details>
+    <details>
+      <summary>Can I reduce self-employment tax with retirement contributions?</summary>
+      <div class="faq-a">No — SEP-IRA and Solo 401(k) contributions cut income tax, not SE tax. Lowering SE tax comes from business deductions or, at higher profits, an S-corp election (which adds costs — model it with a CPA).</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/compound-interest-calculator/"><div class="t">Compound Interest Calculator</div><div class="d">Grow what the IRS doesn't take.</div></a>
+      <a class="tool-card" href="/tools/emergency-fund-calculator/"><div class="t">Emergency Fund Calculator</div><div class="d">Freelancers need a bigger cushion.</div></a>
+      <a class="tool-card" href="/tools/dti-calculator/"><div class="t">DTI Calculator</div><div class="d">How lenders view self-employed income.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+// 2026 federal parameters (IRS Rev. Proc. 2025-32)
+const SS_WAGE_BASE = 184500;
+const STD_DED = { single: 16100, mfj: 32200 };
+const ADDL_MEDICARE_THRESHOLD = { single: 200000, mfj: 250000 };
+const BRACKETS = {
+  single: [[12400, .10], [50400, .12], [105700, .22], [201775, .24], [256225, .32], [640600, .35], [Infinity, .37]],
+  mfj:    [[24800, .10], [100800, .12], [211400, .22], [403550, .24], [512450, .32], [768700, .35], [Infinity, .37]]
+};
+
+function incomeTaxOn(taxable, status) {
+  let tax = 0, prev = 0;
+  for (const [cap, rate] of BRACKETS[status]) {
+    if (taxable <= prev) break;
+    tax += (Math.min(taxable, cap) - prev) * rate;
+    prev = cap;
+  }
+  return tax;
+}
+
+function calc() {
+  const profit = num("profit");
+  const wages = num("wages");
+  const status = $("status").value;
+  if (profit <= 0) return;
+
+  // SE tax
+  const seBase = profit * 0.9235;
+  const ssRoom = Math.max(SS_WAGE_BASE - wages, 0);
+  const ssTax = Math.min(seBase, ssRoom) * 0.124;
+  let medicareTax = seBase * 0.029;
+  const combined = wages + seBase;
+  const addlThresh = ADDL_MEDICARE_THRESHOLD[status];
+  if (combined > addlThresh) medicareTax += Math.min(seBase, combined - addlThresh) * 0.009;
+  const seTax = ssTax + medicareTax;
+
+  // Income tax attributable to SE income (marginal: with vs. without the SE income)
+  const halfSE = seTax / 2;
+  const qbiBase = Math.max(profit - halfSE, 0);
+  const agiWith = wages + profit - halfSE;
+  const preQbiTaxable = Math.max(agiWith - STD_DED[status], 0);
+  const qbi = Math.min(qbiBase * 0.20, preQbiTaxable * 0.20);
+  const taxableWith = Math.max(preQbiTaxable - qbi, 0);
+  const taxableWithout = Math.max(wages - STD_DED[status], 0);
+  const incomeTax = incomeTaxOn(taxableWith, status) - incomeTaxOn(taxableWithout, status);
+
+  const total = seTax + incomeTax;
+  const eff = total / profit * 100;
+
+  $("total").textContent = fmtUSD(total);
+  $("totalSub").textContent = "on " + fmtUSD(profit) + " of self-employment profit" + (wages > 0 ? " (with " + fmtUSD(wages) + " W-2 wages)" : "");
+  $("seTax").textContent = fmtUSD(seTax);
+  $("incomeTax").textContent = fmtUSD(Math.max(incomeTax, 0));
+  $("qbi").textContent = "−" + fmtUSD(qbi) + " from taxable income";
+  $("effRate").textContent = fmtPct(eff);
+  $("quarterly").textContent = fmtUSD(total / 4);
+  $("perK").textContent = fmtUSD(eff * 10);
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

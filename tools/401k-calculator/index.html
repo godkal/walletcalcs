@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>401(k) Calculator — Project Your Balance at Retirement</title>
+<meta name="description" content="Free 401(k) calculator with employer match and annual raises. Project your balance at retirement and see what raising your contribution 1% actually does.">
+<link rel="canonical" href="https://walletcalcs.com/tools/401k-calculator/">
+<meta property="og:title" content="401(k) Calculator">
+<meta property="og:description" content="Project your balance at retirement with employer match and annual raises.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/401k-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "401(k) Calculator",
+      "url": "https://walletcalcs.com/tools/401k-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Project a 401(k) balance at retirement including employer matching and salary growth."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "401(k) Calculator", "item": "https://walletcalcs.com/tools/401k-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much should I contribute to my 401(k)?",
+          "acceptedAnswer": { "@type": "Answer", "text": "At minimum, enough to capture the full employer match — anything less leaves free money on the table. A widely used overall target is saving 15% of gross income for retirement (including the match). If that's out of reach today, start at the match and increase your contribution by 1% each year or with each raise; most people never feel the difference in take-home pay." }
+        },
+        {
+          "@type": "Question",
+          "name": "What return should I assume for my 401(k)?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Long-run U.S. stock market returns have averaged roughly 10% per year before inflation, or 6–7% after inflation. A diversified portfolio that includes bonds lands lower. Planning with 6–7% nominal is conservative; 8% is middle-of-the-road for stock-heavy allocations. Whatever you assume, remember returns arrive unevenly — sequence matters near retirement." }
+        },
+        {
+          "@type": "Question",
+          "name": "Traditional or Roth 401(k)?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Traditional contributions cut your taxes now and are taxed at withdrawal; Roth contributions are taxed now and withdraw tax-free. Rule of thumb: if you expect a higher tax rate in retirement than today (common early in a career), Roth wins; if lower (common at peak earnings), traditional wins. Splitting between both hedges the guess. Employer matches always land in the traditional bucket regardless." }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens to my 401(k) when I change jobs?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Four options: leave it, roll it into the new employer's plan, roll it into an IRA, or cash out. Cashing out is almost always the worst — taxes plus a 10% penalty before age 59½, and the compounding is gone forever. Rollovers to an IRA or new plan are tax-free when done directly (trustee-to-trustee). Also check vesting: employer match money may be forfeited if you leave before the vesting schedule completes." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › 401(k) Calculator</nav>
+  <h1 class="page-title">401(k) Calculator</h1>
+  <p class="page-subtitle">Project your balance at retirement — with employer matching, annual raises, and a one-click answer to "what if I contributed 1% more?"</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="age">Current age</label>
+          <div class="input-wrap"><input type="number" id="age" value="30" min="15" max="80" step="1"></div>
+        </div>
+        <div class="field">
+          <label for="retireAge">Retirement age</label>
+          <div class="input-wrap"><input type="number" id="retireAge" value="65" min="40" max="80" step="1"></div>
+        </div>
+        <div class="field">
+          <label for="balance">Current 401(k) balance</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="balance" value="35000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="salary">Annual salary</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="salary" value="75000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="contrib">Your contribution <span class="hint">(% of salary)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="contrib" value="8" min="0" max="100" step="0.5"></div>
+        </div>
+        <div class="field">
+          <label for="matchPct">Employer match <span class="hint">(% of your contribution)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="matchPct" value="50" min="0" max="200" step="5"></div>
+        </div>
+        <div class="field">
+          <label for="matchCap">Match limit <span class="hint">(up to % of salary)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="matchCap" value="6" min="0" max="25" step="0.5"></div>
+        </div>
+        <div class="field">
+          <label for="ret">Expected annual return</label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="ret" value="7" min="0" max="15" step="0.25"></div>
+        </div>
+        <div class="field full">
+          <label for="raise">Expected annual salary growth</label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="raise" value="3" min="0" max="10" step="0.25"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Projected balance at retirement</div>
+        <div class="value" id="final">—</div>
+        <div class="sub" id="finalSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Your total contributions</span><span class="v" id="yourContrib">—</span></div>
+        <div class="result-row"><span class="k">Employer match total</span><span class="v" id="matchTotal">—</span></div>
+        <div class="result-row"><span class="k">Investment growth</span><span class="v" id="growth">—</span></div>
+        <div class="result-row"><span class="k">If you contributed 1% more</span><span class="v" id="plusOne">—</span></div>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Age</th><th>Your contributions</th><th>Employer match</th><th>Balance</th></tr></thead>
+          <tbody id="schedule"></tbody>
+        </table>
+      </div>
+      <p class="result-note">Nominal dollars (not inflation-adjusted). Assumes contributions stay within IRS annual limits and the match is fully vested.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>The three levers, ranked by power</h2>
+    <p>Every 401(k) projection comes down to three inputs you control. They are not equally powerful:</p>
+    <ol>
+      <li><strong>Time.</strong> Nothing else comes close. At 7% growth, money doubles roughly every 10 years, so a dollar contributed at 25 becomes ~4x a dollar contributed at 45. Starting matters more than optimizing.</li>
+      <li><strong>Contribution rate.</strong> Fully in your control and linear-plus: each extra 1% of salary adds surprisingly large amounts once compounding works on it — use the "1% more" line above to see your own number.</li>
+      <li><strong>Return.</strong> Mostly determined by your stock/bond mix and fees, not fund-picking skill. The controllable part is cost: a 1% expense-ratio difference compounds into a six-figure difference over a career.</li>
+    </ol>
+
+    <h2>Never skip the match</h2>
+    <p>A typical plan matches 50% of contributions up to 6% of salary. On a $75,000 salary, contributing 6% ($4,500) triggers $2,250 of employer money — <strong>an instant, guaranteed 50% return</strong> before any market growth. No other investment legally available to retail savers offers that. If you contribute below the match cap, raising your rate to the cap is the single highest-yield financial move you can make.</p>
+    <p>One caveat: <strong>vesting</strong>. Your own contributions are always yours; match money may vest over 2–6 years. If you're planning a job change, check the schedule — leaving months before a vesting cliff can cost thousands.</p>
+
+    <h2>What the 2026 limits allow</h2>
+    <p>Employee contributions are capped at $24,500 for 2026 ($32,500 including catch-up at 50+, with a higher "super catch-up" for ages 60–63). The combined employee-plus-employer limit is far higher ($72,000). Most savers never hit these ceilings — but high earners doing the math on maxing out should also look at the <a href="/tools/compound-interest-calculator/">compound interest calculator</a> for taxable-account savings beyond the cap.</p>
+
+    <h2>Reading your projection honestly</h2>
+    <ul>
+      <li><strong>The final number is in future dollars.</strong> At 2.5% inflation, $1.5 million in 35 years buys what ~$630,000 buys today. Judge the number accordingly, or re-run the projection with a 4–4.5% "real" return to think in today's dollars.</li>
+      <li><strong>Straight-line growth is a simplification.</strong> Real markets deliver the average through swings of ±20% or worse. The average is a fair planning tool decades out; it's a poor one within 5 years of retirement, where the <a href="/tools/retirement-withdrawal-calculator/">withdrawal math</a> takes over.</li>
+      <li><strong>Salary growth cuts both ways.</strong> Raises grow your contributions automatically (this calculator models that), but they also raise the lifestyle your savings must eventually replace.</li>
+    </ul>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>How much should I contribute to my 401(k)?</summary>
+      <div class="faq-a">At minimum the full employer match; a common overall target is 15% of gross income including the match. If that's out of reach, start at the match and add 1% each year or with each raise.</div>
+    </details>
+    <details>
+      <summary>What return should I assume for my 401(k)?</summary>
+      <div class="faq-a">Long-run U.S. stocks have averaged ~10% nominal (6–7% after inflation); diversified portfolios land lower. 6–7% is conservative, 8% middle-of-the-road for stock-heavy mixes. Returns arrive unevenly — averages are for long horizons.</div>
+    </details>
+    <details>
+      <summary>Traditional or Roth 401(k)?</summary>
+      <div class="faq-a">Roth wins if you expect higher tax rates in retirement than today; traditional wins if lower. Splitting hedges the guess. Employer matches always go into the traditional bucket.</div>
+    </details>
+    <details>
+      <summary>What happens to my 401(k) when I change jobs?</summary>
+      <div class="faq-a">Leave it, roll to the new plan, roll to an IRA, or cash out. Cashing out costs taxes plus a 10% penalty before 59½ and kills the compounding. Direct rollovers are tax-free. Check your match's vesting schedule before you resign.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/compound-interest-calculator/"><div class="t">Compound Interest Calculator</div><div class="d">The engine behind these numbers.</div></a>
+      <a class="tool-card" href="/tools/retirement-withdrawal-calculator/"><div class="t">Retirement Withdrawal Calculator</div><div class="d">Will the balance actually last?</div></a>
+      <a class="tool-card" href="/tools/self-employment-tax-calculator/"><div class="t">Self-Employment Tax Calculator</div><div class="d">Freelancing? Different rules apply.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function project(age, retireAge, balance, salary, contribPct, matchPct, matchCapPct, retPct, raisePct) {
+  let bal = balance, sal = salary, yourTotal = 0, matchTotal = 0;
+  const rows = [];
+  const years = Math.max(retireAge - age, 0);
+  for (let y = 1; y <= years; y++) {
+    const yours = sal * contribPct / 100;
+    // employer matches matchPct% of your contribution, but only on the first matchCapPct% of salary
+    const cappedYours = Math.min(yours, sal * matchCapPct / 100);
+    const actualMatch = cappedYours * matchPct / 100;
+    bal = bal * (1 + retPct / 100) + (yours + actualMatch);
+    yourTotal += yours;
+    matchTotal += actualMatch;
+    if (y % 5 === 0 || y === years) {
+      rows.push({ age: age + y, yours: yourTotal, match: matchTotal, balance: bal });
+    }
+    sal *= 1 + raisePct / 100;
+  }
+  return { final: bal, yourTotal, matchTotal, rows };
+}
+
+function calc() {
+  const age = num("age"), retireAge = num("retireAge"), balance = num("balance"),
+        salary = num("salary"), contrib = num("contrib"), matchPct = num("matchPct"),
+        matchCap = num("matchCap"), ret = num("ret"), raise = num("raise");
+  if (retireAge <= age || salary < 0) return;
+
+  const res = project(age, retireAge, balance, salary, contrib, matchPct, matchCap, ret, raise);
+  const plus = project(age, retireAge, balance, salary, contrib + 1, matchPct, matchCap, ret, raise);
+
+  $("final").textContent = fmtUSD(res.final);
+  $("finalSub").textContent = "at age " + retireAge + " (" + (retireAge - age) + " years of growth, nominal dollars)";
+  $("yourContrib").textContent = fmtUSD(res.yourTotal);
+  $("matchTotal").textContent = fmtUSD(res.matchTotal);
+  $("growth").textContent = fmtUSD(res.final - balance - res.yourTotal - res.matchTotal);
+  $("plusOne").textContent = fmtUSD(plus.final) + " (+" + fmtUSD(plus.final - res.final) + ")";
+
+  $("schedule").innerHTML = res.rows.map((r) =>
+    "<tr><td>Age " + r.age + "</td><td>" + fmtUSD(r.yours) + "</td><td>" + fmtUSD(r.match) + "</td><td>" + fmtUSD(r.balance) + "</td></tr>"
+  ).join("");
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

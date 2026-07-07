@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Affordability Calculator — How Much House Can I Afford?</title>
+<meta name="description" content="Free home affordability calculator using the 28/36 rule lenders use. Enter income, debts, and down payment to get a realistic home price budget with taxes and insurance included.">
+<link rel="canonical" href="https://walletcalcs.com/tools/home-affordability-calculator/">
+<meta property="og:title" content="Home Affordability Calculator">
+<meta property="og:description" content="How much house can you actually afford? Uses the 28/36 rule lenders use.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/home-affordability-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Home Affordability Calculator",
+      "url": "https://walletcalcs.com/tools/home-affordability-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Estimate the maximum home price you can afford using the 28/36 rule, including property taxes, insurance, and existing debts."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Home Affordability Calculator", "item": "https://walletcalcs.com/tools/home-affordability-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many times my salary can I borrow for a house?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The old '3x your salary' shortcut breaks down when rates change. At 7% interest, most buyers max out around 3 to 3.5 times gross income; at 4%, the same payment supports closer to 4.5 to 5 times. Payment-based math — like the 28/36 rule this calculator uses — is what lenders actually apply, and it automatically adjusts for the current rate." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the 28/36 rule?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A lending guideline: your housing payment (principal, interest, taxes, insurance) should stay at or under 28% of gross monthly income, and your total debt payments including housing should stay at or under 36%. Whichever cap is tighter sets your budget. Many loans allow higher ratios, but 28/36 remains the benchmark for a comfortable payment." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much down payment do I really need?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The 20% figure avoids private mortgage insurance (PMI), but it's not a requirement. Conventional loans go as low as 3% down, FHA 3.5%, and VA/USDA 0% for eligible buyers. PMI on a low-down-payment conventional loan typically costs 0.3–1.5% of the loan per year and drops off once you reach 20% equity — often a fair price for buying years sooner." }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I buy at the top of my approved budget?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Lender pre-approval is a ceiling, not a recommendation — it ignores childcare, utilities, maintenance (typically 1–2% of home value yearly), and your savings goals. A common approach is to shop 10–20% below the maximum approval, which keeps room for rate surprises, repairs, and life changes." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Home Affordability Calculator</nav>
+  <h1 class="page-title">Home Affordability Calculator</h1>
+  <p class="page-subtitle">A realistic home-price budget based on the 28/36 rule lenders actually use — with property taxes, insurance, and your existing debts built in.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="income">Gross annual household income</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="income" value="90000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="debts">Monthly debt payments <span class="hint">(loans, cards, etc.)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="debts" value="500" min="0" step="50"></div>
+        </div>
+        <div class="field">
+          <label for="down">Down payment saved</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="down" value="40000" min="0" step="1000"></div>
+        </div>
+        <div class="field">
+          <label for="rate">Mortgage rate <span class="hint">(30-yr fixed)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="rate" value="6.5" min="0" max="15" step="0.05"></div>
+        </div>
+        <div class="field">
+          <label for="taxRate">Property tax rate <span class="hint">(% of value/yr)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="taxRate" value="1.1" min="0" max="5" step="0.05"></div>
+        </div>
+        <div class="field">
+          <label for="insurance">Home insurance <span class="hint">($/yr)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="insurance" value="1800" min="0" step="100"></div>
+        </div>
+        <div class="field full">
+          <label for="profile">Budget style</label>
+          <select id="profile">
+            <option value="28,36" selected>Comfortable — classic 28/36 rule</option>
+            <option value="31,43">Stretch — FHA-style 31/43 limits</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Home price you can afford</div>
+        <div class="value" id="price">—</div>
+        <div class="sub" id="priceSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Loan amount</span><span class="v" id="loan">—</span></div>
+        <div class="result-row"><span class="k">Monthly payment (PITI)</span><span class="v" id="piti">—</span></div>
+        <div class="result-row"><span class="k">— Principal &amp; interest</span><span class="v" id="pi">—</span></div>
+        <div class="result-row"><span class="k">— Taxes &amp; insurance</span><span class="v" id="ti">—</span></div>
+        <div class="result-row"><span class="k">Binding limit</span><span class="v" id="binding">—</span></div>
+        <div class="result-row"><span class="k">Down payment %</span><span class="v" id="downPct">—</span></div>
+      </div>
+      <p class="result-note" id="pmiNote">Assumes a 30-year fixed loan. PMI (required below 20% down) is not included — budget roughly 0.3–1.5% of the loan per year if applicable.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>How this calculator decides your budget</h2>
+    <p>Lenders don't start from home prices — they start from your monthly capacity. This tool does the same, in three steps:</p>
+    <ol>
+      <li><strong>Find your payment ceiling.</strong> Housing is capped at 28% of gross monthly income (front-end), and housing plus all other debt at 36% (back-end). Whichever produces the smaller housing payment wins.</li>
+      <li><strong>Subtract the non-loan costs.</strong> Property taxes and insurance live inside your monthly payment (PITI), so they're carved out before any principal and interest.</li>
+      <li><strong>Work backwards to a price.</strong> The remaining principal-and-interest capacity is converted into a maximum loan using the standard amortization formula, and your down payment is added on top.</li>
+    </ol>
+    <p>Because property tax scales with the home's value, the calculator solves for the price where everything balances — a detail many simple calculators skip, which is why their numbers run high.</p>
+
+    <h2>Why rates move your budget more than prices do</h2>
+    <p>On a $90,000 income with modest debts, watch what the interest rate alone does to the maximum price (20% down, same tax and insurance):</p>
+    <table>
+      <tr><th>Mortgage rate</th><th>Approx. max home price</th></tr>
+      <tr><td>5.0%</td><td>~$390,000</td></tr>
+      <tr><td>6.5%</td><td>~$345,000</td></tr>
+      <tr><td>8.0%</td><td>~$305,000</td></tr>
+    </table>
+    <p>A 3-point rate swing changes buying power by roughly 25%. This is why "waiting for prices to drop" can backfire if rates rise in the meantime — and why a rate buydown or a larger down payment is sometimes worth more than a price negotiation.</p>
+
+    <h2>The costs that aren't in your mortgage payment</h2>
+    <p>Budgeting to the PITI number alone is the classic first-time buyer mistake. Plan for:</p>
+    <ul>
+      <li><strong>Maintenance and repairs:</strong> 1–2% of the home's value per year, lumpy and unavoidable (roofs and water heaters don't care about your budget).</li>
+      <li><strong>Closing costs:</strong> typically 2–5% of the purchase price, on top of the down payment.</li>
+      <li><strong>PMI</strong> if you put down less than 20% on a conventional loan.</li>
+      <li><strong>HOA dues</strong> where applicable — lenders count these in your DTI, and so should you.</li>
+      <li><strong>Utilities and insurance surprises:</strong> bigger homes cost more to heat, cool, and insure, especially in weather-risk states.</li>
+    </ul>
+    <p>Before house-hunting, confirm your <a href="/tools/dti-calculator/">debt-to-income ratio</a> is where lenders want it, and keep an <a href="/tools/emergency-fund-calculator/">emergency fund</a> intact after closing — the down payment shouldn't be your last dollar.</p>
+
+    <h2>Getting from "afford" to "approved"</h2>
+    <p>This calculator estimates capacity; a lender adds credit score, employment history, and reserves. To present the strongest file: avoid new debt for six months before applying (a car loan can cut your budget by $40,000+ — test it above), keep credit utilization low, and get pre-approvals from two or three lenders within a 45-day window so the credit inquiries count as one. Once you have a target price, see what <a href="/tools/mortgage-payoff-calculator/">extra payments</a> would do to the loan long-term.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>How many times my salary can I borrow for a house?</summary>
+      <div class="faq-a">The "3x salary" shortcut breaks when rates move. At 7%, buyers max out around 3–3.5x gross income; at 4%, closer to 4.5–5x. Payment-based math like the 28/36 rule adjusts for rates automatically — it's what lenders actually use.</div>
+    </details>
+    <details>
+      <summary>What is the 28/36 rule?</summary>
+      <div class="faq-a">Housing payment ≤ 28% of gross monthly income, and housing plus all debts ≤ 36%. The tighter cap sets your budget. Loans can be approved above these ratios, but 28/36 marks the comfortable zone.</div>
+    </details>
+    <details>
+      <summary>How much down payment do I really need?</summary>
+      <div class="faq-a">20% avoids PMI but isn't required: conventional loans go to 3% down, FHA 3.5%, VA/USDA 0% for eligible buyers. PMI costs roughly 0.3–1.5% of the loan yearly and disappears at 20% equity.</div>
+    </details>
+    <details>
+      <summary>Should I buy at the top of my approved budget?</summary>
+      <div class="faq-a">Pre-approval is a ceiling, not advice — it ignores maintenance, childcare, and savings goals. Shopping 10–20% below your maximum leaves room for repairs and surprises.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/dti-calculator/"><div class="t">DTI Calculator</div><div class="d">The ratio behind this budget.</div></a>
+      <a class="tool-card" href="/tools/mortgage-payoff-calculator/"><div class="t">Mortgage Payoff Calculator</div><div class="d">What extra payments save after you buy.</div></a>
+      <a class="tool-card" href="/tools/emergency-fund-calculator/"><div class="t">Emergency Fund Calculator</div><div class="d">The cushion to keep after closing.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function calc() {
+  const incomeM = num("income") / 12;
+  const debts = num("debts");
+  const down = num("down");
+  const rate = num("rate");
+  const taxRate = num("taxRate");
+  const insM = num("insurance") / 12;
+  const caps = ($("profile").value || "28,36").split(",").map(Number);
+  if (incomeM <= 0) return;
+
+  const frontCap = incomeM * caps[0] / 100;
+  const backCap = incomeM * caps[1] / 100 - debts;
+  const maxPITI = Math.min(frontCap, backCap);
+  const binding = frontCap <= backCap ? "housing ratio (" + caps[0] + "%)" : "total debt ratio (" + caps[1] + "%)";
+
+  if (maxPITI <= insM) {
+    $("price").textContent = "$0";
+    $("priceSub").textContent = "Debts and fixed costs use up the entire payment capacity.";
+    return;
+  }
+
+  // Solve: maxPITI = f*(P - down) + t*P + insM, where f = P&I per $ of loan, t = monthly tax per $ of price
+  const n = 360;
+  const r = rate / 100 / 12;
+  const f = r === 0 ? 1 / n : r / (1 - Math.pow(1 + r, -n));
+  const t = taxRate / 100 / 12;
+  let price = (maxPITI - insM + f * down) / (f + t);
+  price = Math.max(price, down);
+  const loan = Math.max(price - down, 0);
+  const pi = f * loan;
+  const ti = t * price + insM;
+
+  $("price").textContent = fmtUSD(price);
+  $("priceSub").textContent = "with " + fmtUSD(down) + " down at " + rate + "% (30-yr fixed)";
+  $("loan").textContent = fmtUSD(loan);
+  $("piti").textContent = fmtUSD2(pi + ti);
+  $("pi").textContent = fmtUSD2(pi);
+  $("ti").textContent = fmtUSD2(ti);
+  $("binding").textContent = binding;
+  $("downPct").textContent = price > 0 ? fmtPct(down / price * 100) : "—";
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

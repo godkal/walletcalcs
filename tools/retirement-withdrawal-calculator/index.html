@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retirement Withdrawal Calculator — How Long Will My Savings Last?</title>
+<meta name="description" content="Free retirement withdrawal calculator. Test the 4% rule with your own numbers: enter savings, monthly withdrawals, and returns to see how long your money lasts.">
+<link rel="canonical" href="https://walletcalcs.com/tools/retirement-withdrawal-calculator/">
+<meta property="og:title" content="Retirement Withdrawal Calculator">
+<meta property="og:description" content="How long will your savings last at a given withdrawal rate? Test the 4% rule.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/retirement-withdrawal-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Retirement Withdrawal Calculator",
+      "url": "https://walletcalcs.com/tools/retirement-withdrawal-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Calculate how long retirement savings last at a chosen withdrawal amount, with returns and inflation adjustments."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Retirement Withdrawal Calculator", "item": "https://walletcalcs.com/tools/retirement-withdrawal-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the 4% rule?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A guideline from the 1994 Bengen study: withdraw 4% of your portfolio in year one of retirement, then adjust that dollar amount for inflation each year. Historically, a 50–75% stock portfolio survived every 30-year U.S. period at that rate. It implies you need about 25x your annual spending to retire. It's a planning benchmark, not a guarantee — some researchers now argue for 3.5–4.5% depending on valuations, retirement length, and flexibility." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is sequence-of-returns risk?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The danger that bad market years arrive early in retirement, while you're withdrawing. Two retirees with identical average returns can end up wildly apart: the one who hits a 30% crash in years 1–2 sells shares cheap to fund living costs and may run out, while the one whose crash comes in year 25 barely notices. Defenses include a 1–3 year cash buffer, flexible spending rules, and a moderate bond allocation early in retirement." }
+        },
+        {
+          "@type": "Question",
+          "name": "Should my withdrawals adjust for inflation?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes — a fixed dollar withdrawal quietly cuts your real spending power roughly in half over 24 years at 3% inflation. This calculator's inflation setting increases the withdrawal each year to hold purchasing power constant, which is the realistic (and more demanding) test of whether savings will last." }
+        },
+        {
+          "@type": "Question",
+          "name": "When do required minimum distributions (RMDs) start?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Under current law, RMDs from traditional 401(k)s and IRAs start at age 73 (rising to 75 for those born in 1960 or later). Roth IRAs have no lifetime RMDs. RMDs set a floor on withdrawals — a first-year RMD is roughly 3.8% of the balance — so plans that intend to withdraw less than that from traditional accounts need to account for the forced income and its taxes." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Retirement Withdrawal Calculator</nav>
+  <h1 class="page-title">Retirement Withdrawal Calculator</h1>
+  <p class="page-subtitle">The question every retirement plan must answer: at your spending rate, with your returns, how long does the money actually last?</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="savings">Retirement savings</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="savings" value="1000000" min="0" step="10000"></div>
+        </div>
+        <div class="field">
+          <label for="monthly">Monthly withdrawal <span class="hint">(today's dollars)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="monthly" value="4000" min="0" step="100"></div>
+        </div>
+        <div class="field">
+          <label for="ret">Annual return during retirement</label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="ret" value="5.5" min="0" max="12" step="0.25"></div>
+        </div>
+        <div class="field">
+          <label for="inflation">Inflation <span class="hint">(withdrawals rise yearly)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="inflation" value="2.5" min="0" max="10" step="0.25"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Your money lasts</div>
+        <div class="value" id="lasts">—</div>
+        <div class="sub" id="lastsSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Initial withdrawal rate</span><span class="v" id="rate">—</span></div>
+        <div class="result-row"><span class="k">vs. the 4% rule benchmark</span><span class="v" id="fourPct">—</span></div>
+        <div class="result-row"><span class="k">Sustainable monthly amount (30 yrs)</span><span class="v" id="sustainable">—</span></div>
+        <div class="result-row"><span class="k">Total withdrawn</span><span class="v" id="totalOut">—</span></div>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Year</th><th>Annual withdrawal</th><th>Growth</th><th>Balance</th></tr></thead>
+          <tbody id="schedule"></tbody>
+        </table>
+      </div>
+      <p class="result-note">Constant-return model. Real portfolios face sequence risk — treat results as a central estimate, not a floor. Taxes on withdrawals are not modeled.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>The retirement math nobody escapes</h2>
+    <p>Accumulation gets all the attention, but decumulation is the harder problem: you're spending from a pot that must survive an unknown number of years through unknowable markets. The core tension is simple — <strong>withdraw too much and you outlive the money; withdraw too little and you needlessly lived poorer than you could have.</strong></p>
+    <p>This calculator models the standard approach: withdrawals start at your chosen amount and rise with inflation to hold purchasing power steady, while the remaining balance keeps earning returns.</p>
+
+    <h2>Reading your withdrawal rate</h2>
+    <p>Your initial withdrawal rate — first-year withdrawals ÷ starting balance — is the single best predictor of survival:</p>
+    <table>
+      <tr><th>Initial rate</th><th>Historical 30-year outcome (balanced portfolio)</th></tr>
+      <tr><td>3.0–3.5%</td><td>Survived essentially every historical period; often leaves a large surplus.</td></tr>
+      <tr><td>4.0%</td><td>The classic benchmark — survived all historical 30-year periods in the original research.</td></tr>
+      <tr><td>5.0%</td><td>Failed in roughly 20–25% of historical periods; needs flexibility to be safe.</td></tr>
+      <tr><td>6%+</td><td>High odds of depletion within 30 years unless returns are exceptional or spending can drop.</td></tr>
+    </table>
+    <p>The inverse of the rule is the accumulation target: sustainable spending of $X per year requires roughly 25 × X saved. Working backwards from spending to a savings goal is exactly what the <a href="/tools/401k-calculator/">401(k) calculator</a> and <a href="/tools/compound-interest-calculator/">compound interest calculator</a> are for.</p>
+
+    <h2>Why the average return isn't enough: sequence risk</h2>
+    <p>A constant 5.5% return and a volatile sequence averaging 5.5% are very different retirements. When markets fall early while you're selling shares to eat, the portfolio takes permanent damage no later recovery fully repairs. Three practical defenses:</p>
+    <ul>
+      <li><strong>Cash buffer:</strong> 1–3 years of spending in cash or short-term bonds, refilled in good years, so crashes never force selling equities at the bottom.</li>
+      <li><strong>Guardrails:</strong> pre-agreed rules like "skip the inflation raise after a down year" or "cut spending 10% if the withdrawal rate drifts above 5.5%." Small, early cuts have outsized survival effects.</li>
+      <li><strong>Flooring:</strong> cover non-negotiable expenses with guaranteed income (Social Security, pensions, possibly an annuity), so market risk only touches discretionary spending.</li>
+    </ul>
+
+    <h2>Don't forget the tax layer</h2>
+    <p>Withdrawals from traditional 401(k)s and IRAs are ordinary income; Roth withdrawals are tax-free; taxable-account sales incur capital gains. A common sequencing strategy — taxable first, traditional next, Roth last — often stretches portfolio life by a year or more, and required minimum distributions from age 73 put a floor under traditional-account withdrawals whether you need the money or not. Model your gross needs here, then plan the tax layer with a professional.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>What is the 4% rule?</summary>
+      <div class="faq-a">Withdraw 4% of the portfolio in year one, then adjust for inflation annually. Historically survived every 30-year U.S. period with a 50–75% stock mix. Implies needing ~25x annual spending. A benchmark, not a guarantee.</div>
+    </details>
+    <details>
+      <summary>What is sequence-of-returns risk?</summary>
+      <div class="faq-a">The risk of bad market years arriving early in retirement while you're withdrawing — selling cheap does permanent damage. Defenses: a 1–3 year cash buffer, flexible spending rules, and moderate bonds early on.</div>
+    </details>
+    <details>
+      <summary>Should my withdrawals adjust for inflation?</summary>
+      <div class="faq-a">Yes. A fixed dollar withdrawal loses about half its purchasing power in 24 years at 3% inflation. This calculator raises withdrawals with inflation — the realistic test.</div>
+    </details>
+    <details>
+      <summary>When do required minimum distributions (RMDs) start?</summary>
+      <div class="faq-a">Age 73 currently, rising to 75 for those born 1960 or later. Roth IRAs are exempt. A first-year RMD is roughly 3.8% of the traditional-account balance, forced and taxable.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/401k-calculator/"><div class="t">401(k) Calculator</div><div class="d">Build the balance this tool spends.</div></a>
+      <a class="tool-card" href="/tools/compound-interest-calculator/"><div class="t">Compound Interest Calculator</div><div class="d">The accumulation side of the math.</div></a>
+      <a class="tool-card" href="/tools/life-insurance-calculator/"><div class="t">Life Insurance Calculator</div><div class="d">Protect the plan for the people in it.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function simulate(savings, monthly, retPct, inflPct, maxYears = 60) {
+  let bal = savings, withdrawal = monthly * 12, totalOut = 0;
+  const rows = [];
+  for (let y = 1; y <= maxYears; y++) {
+    const growth = bal * retPct / 100;
+    const out = Math.min(withdrawal, bal + growth);
+    bal = bal + growth - out;
+    totalOut += out;
+    if (y <= 5 || y % 5 === 0 || bal <= 0) rows.push({ year: y, out, growth, balance: Math.max(bal, 0) });
+    if (bal <= 0) return { years: y, totalOut, rows, depleted: true };
+    withdrawal *= 1 + inflPct / 100;
+  }
+  return { years: maxYears, totalOut, rows, depleted: false };
+}
+
+function sustainableMonthly(savings, retPct, inflPct, targetYears = 30) {
+  let lo = 0, hi = savings; // monthly
+  for (let i = 0; i < 60; i++) {
+    const mid = (lo + hi) / 2;
+    const r = simulate(savings, mid, retPct, inflPct, targetYears + 1);
+    if (r.depleted && r.years <= targetYears) hi = mid; else lo = mid;
+  }
+  return lo;
+}
+
+function calc() {
+  const savings = num("savings");
+  const monthly = num("monthly");
+  const ret = num("ret");
+  const inflation = num("inflation");
+  if (savings <= 0 || monthly <= 0) return;
+
+  const res = simulate(savings, monthly, ret, inflation);
+  const initRate = monthly * 12 / savings * 100;
+
+  $("lasts").textContent = res.depleted ? res.years + " years" : res.years + "+ years";
+  $("lastsSub").textContent = res.depleted
+    ? "the balance runs out in year " + res.years
+    : "the balance survives the full 60-year horizon";
+  $("rate").textContent = fmtPct(initRate);
+  $("fourPct").textContent = initRate <= 4 ? "at or below the benchmark" : fmtPct(initRate - 4) + " above the benchmark";
+  $("sustainable").textContent = fmtUSD(sustainableMonthly(savings, ret, inflation)) + "/mo";
+  $("totalOut").textContent = fmtUSD(res.totalOut);
+
+  $("schedule").innerHTML = res.rows.map((r) =>
+    "<tr><td>Year " + r.year + "</td><td>" + fmtUSD(r.out) + "</td><td>" + fmtUSD(r.growth) + "</td><td>" + fmtUSD(r.balance) + "</td></tr>"
+  ).join("");
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

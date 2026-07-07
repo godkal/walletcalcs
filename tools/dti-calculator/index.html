@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debt-to-Income (DTI) Ratio Calculator — Where Do You Stand With Lenders?</title>
+<meta name="description" content="Free DTI calculator. Compute your front-end and back-end debt-to-income ratios the way mortgage lenders do, and see what the thresholds mean for approval.">
+<link rel="canonical" href="https://walletcalcs.com/tools/dti-calculator/">
+<meta property="og:title" content="Debt-to-Income (DTI) Calculator">
+<meta property="og:description" content="Calculate the ratio lenders check first — and see where you stand.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/dti-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Debt-to-Income (DTI) Calculator",
+      "url": "https://walletcalcs.com/tools/dti-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Calculate front-end and back-end debt-to-income ratios used by mortgage lenders."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "DTI Calculator", "item": "https://walletcalcs.com/tools/dti-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What DTI do I need for a mortgage?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Conventional loans generally want a back-end DTI of 36% or less, though automated underwriting can approve up to 45–50% with strong credit and reserves. FHA loans commonly allow up to 43% and sometimes higher with compensating factors. Below 36% you're in comfortable territory; 36–43% is approvable but tighter; above 50% most lenders decline." }
+        },
+        {
+          "@type": "Question",
+          "name": "What counts as debt in a DTI calculation?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Monthly obligations that appear on your credit report: mortgage or rent, auto loans, student loans, personal loans, credit card minimum payments, and court-ordered payments like child support. It does not include utilities, groceries, insurance premiums (except those escrowed in a mortgage payment), phone bills, or subscriptions." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is DTI calculated with gross or net income?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Gross income — before taxes and deductions. Lenders use gross monthly income from pay stubs, W-2s, or tax returns for the self-employed. This means the ratio looks better on paper than it feels in your budget, which is why staying well below the maximums is wise." }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I lower my DTI quickly?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Two levers: reduce monthly debt payments or increase documented income. The fastest wins are usually paying off a small loan entirely (removing its whole payment), paying a car loan down enough to refinance the payment lower, or paying credit cards below the reported minimums. Increasing income helps but must usually be documented for two years if it's variable or self-employed income." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › DTI Calculator</nav>
+  <h1 class="page-title">Debt-to-Income (DTI) Ratio Calculator</h1>
+  <p class="page-subtitle">The first number a mortgage lender computes about you. Calculate both your front-end and back-end ratios and see exactly where you stand.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field full">
+          <label for="income">Gross monthly income <span class="hint">(before taxes, all borrowers)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="income" value="7500" min="0" step="100"></div>
+        </div>
+        <div class="field">
+          <label for="housing">Housing payment <span class="hint">(rent, or mortgage+tax+insurance)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="housing" value="1800" min="0" step="50"></div>
+        </div>
+        <div class="field">
+          <label for="auto">Auto loan payments</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="auto" value="450" min="0" step="25"></div>
+        </div>
+        <div class="field">
+          <label for="student">Student loan payments</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="student" value="250" min="0" step="25"></div>
+        </div>
+        <div class="field">
+          <label for="cards">Credit card minimum payments</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="cards" value="150" min="0" step="25"></div>
+        </div>
+        <div class="field full">
+          <label for="other">Other monthly debt <span class="hint">(personal loans, child support, etc.)</span></label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="other" value="0" min="0" step="25"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Back-end DTI (what lenders check)</div>
+        <div class="value" id="backend">—</div>
+        <div class="sub" id="verdict"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Front-end DTI (housing only)</span><span class="v" id="frontend">—</span></div>
+        <div class="result-row"><span class="k">Total monthly debt</span><span class="v" id="totalDebt">—</span></div>
+        <div class="result-row"><span class="k">Room before hitting 36%</span><span class="v" id="room36">—</span></div>
+        <div class="result-row"><span class="k">Room before hitting 43%</span><span class="v" id="room43">—</span></div>
+      </div>
+      <p class="result-note">Uses gross (pre-tax) income, the same basis lenders use.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>What DTI is and why lenders care so much</h2>
+    <p>Your debt-to-income ratio is your total monthly debt payments divided by your gross monthly income. It answers the lender's core question — <em>how much of this person's income is already spoken for?</em> — better than your credit score does. A score measures whether you pay; DTI measures whether you <em>can</em> pay one more bill.</p>
+    <div class="formula">Back-end DTI = (housing + all debt payments) ÷ gross monthly income × 100</div>
+    <p>Lenders actually compute two versions:</p>
+    <ul>
+      <li><strong>Front-end (housing) ratio:</strong> just the housing payment ÷ income. The classic target is 28% or less.</li>
+      <li><strong>Back-end (total) ratio:</strong> housing plus every recurring debt ÷ income. This is the number that drives approval decisions.</li>
+    </ul>
+
+    <h2>The thresholds that matter in 2026</h2>
+    <table>
+      <tr><th>Back-end DTI</th><th>What it means</th></tr>
+      <tr><td>Under 36%</td><td>Comfortable. Qualifies for the best conventional pricing; leaves budget slack.</td></tr>
+      <tr><td>36–43%</td><td>Approvable, but tighter. Conventional loans may need strong credit or reserves; FHA is routinely fine here.</td></tr>
+      <tr><td>43–50%</td><td>Possible only with compensating factors (high score, large down payment, cash reserves). Expect friction.</td></tr>
+      <tr><td>Over 50%</td><td>Most lenders decline. Focus on debt reduction before applying.</td></tr>
+    </table>
+    <p>These bands come from the classic <strong>28/36 rule</strong> and current agency guidelines. Note that the qualified-mortgage framework historically centered on 43%, and automated underwriting (Fannie Mae's DU, Freddie Mac's LP) can stretch approvals to ~50% for otherwise strong files.</p>
+
+    <h2>What counts — and what doesn't</h2>
+    <p><strong>Counted:</strong> rent or mortgage (with escrowed taxes/insurance), auto loans, student loans, personal loans, credit card minimums (not your full balance), and court-ordered obligations like child support.</p>
+    <p><strong>Not counted:</strong> utilities, groceries, gas, phone plans, streaming, health insurance, and 401(k) loans. Lenders ignore these, but your budget doesn't — which is why a 43% DTI that's "approvable" can still feel suffocating in real life.</p>
+
+    <h2>Lowering your DTI before a mortgage application</h2>
+    <ol>
+      <li><strong>Kill a whole payment, not part of one.</strong> DTI counts payments, not balances. Paying off a $3,000 car loan with a $400 payment helps more than putting $10,000 against a mortgage.</li>
+      <li><strong>Pay cards down before the statement date.</strong> Minimum payments reported to the bureaus are what count. Our <a href="/tools/credit-card-payoff-calculator/">credit card payoff calculator</a> shows how fast you can clear them.</li>
+      <li><strong>Don't finance anything new within 6 months of applying.</strong> A new car payment can cut your home budget by tens of thousands of dollars — check the effect with the <a href="/tools/home-affordability-calculator/">home affordability calculator</a>.</li>
+      <li><strong>Document all income.</strong> Bonuses, overtime, and side income usually need a two-year history to count. Gather the paperwork early.</li>
+    </ol>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>What DTI do I need for a mortgage?</summary>
+      <div class="faq-a">Conventional loans generally target 36% or less on the back end, with automated approvals possible to 45–50% for strong files. FHA routinely allows up to 43% and sometimes more. Above 50%, most lenders decline.</div>
+    </details>
+    <details>
+      <summary>What counts as debt in a DTI calculation?</summary>
+      <div class="faq-a">Recurring obligations on your credit report: housing, auto loans, student loans, personal loans, credit card minimums, and court-ordered payments. Utilities, groceries, insurance, and subscriptions don't count.</div>
+    </details>
+    <details>
+      <summary>Is DTI calculated with gross or net income?</summary>
+      <div class="faq-a">Gross (pre-tax) income. That makes the ratio look better on paper than it feels in your actual budget — a good reason to stay well under the maximums.</div>
+    </details>
+    <details>
+      <summary>How can I lower my DTI quickly?</summary>
+      <div class="faq-a">Eliminate entire payments (pay off a small loan completely), reduce reported credit card minimums, or refinance a payment lower. New income usually needs a documented history to count.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/home-affordability-calculator/"><div class="t">Home Affordability Calculator</div><div class="d">Turn your DTI room into a house budget.</div></a>
+      <a class="tool-card" href="/tools/credit-card-payoff-calculator/"><div class="t">Credit Card Payoff Calculator</div><div class="d">Clear the minimums dragging your ratio up.</div></a>
+      <a class="tool-card" href="/tools/auto-loan-calculator/"><div class="t">Auto Loan Calculator</div><div class="d">See a car payment before it hits your DTI.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function calc() {
+  const income = num("income");
+  const housing = num("housing");
+  const debt = num("auto") + num("student") + num("cards") + num("other");
+  if (income <= 0) return;
+
+  const front = housing / income * 100;
+  const back = (housing + debt) / income * 100;
+
+  $("frontend").textContent = fmtPct(front);
+  $("backend").textContent = fmtPct(back);
+  $("totalDebt").textContent = fmtUSD(housing + debt);
+
+  const room36 = income * 0.36 - (housing + debt);
+  const room43 = income * 0.43 - (housing + debt);
+  $("room36").textContent = (room36 >= 0 ? fmtUSD(room36) + "/mo" : fmtUSD(-room36) + "/mo over");
+  $("room43").textContent = (room43 >= 0 ? fmtUSD(room43) + "/mo" : fmtUSD(-room43) + "/mo over");
+
+  let verdict;
+  if (back < 28) verdict = "Excellent — well inside every lender guideline.";
+  else if (back < 36) verdict = "Good — inside the classic 36% conventional guideline.";
+  else if (back < 43) verdict = "Caution — approvable, but options narrow. FHA territory.";
+  else if (back < 50) verdict = "High — approval needs strong compensating factors.";
+  else verdict = "Very high — most lenders will decline at this level.";
+  $("verdict").textContent = verdict;
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>

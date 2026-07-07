@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Loan Calculator — Car Payment With Tax, Fees &amp; Trade-In</title>
+<meta name="description" content="Free auto loan calculator. Estimate your real monthly car payment including sales tax, fees, trade-in value, and down payment — plus total interest cost.">
+<link rel="canonical" href="https://walletcalcs.com/tools/auto-loan-calculator/">
+<meta property="og:title" content="Auto Loan Calculator">
+<meta property="og:description" content="Car payment with taxes, fees, trade-in, and down payment included.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://walletcalcs.com/tools/auto-loan-calculator/">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Auto Loan Calculator",
+      "url": "https://walletcalcs.com/tools/auto-loan-calculator/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Estimate a monthly car payment including sales tax, fees, trade-in, and down payment, plus total loan cost."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://walletcalcs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Auto Loan Calculator", "item": "https://walletcalcs.com/tools/auto-loan-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What credit score do I need for a good auto loan rate?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Lenders group borrowers into tiers. Super-prime (781+) gets the best advertised rates; prime (661–780) pays a bit more; near-prime and subprime (below 660) can pay two to four times the prime rate. If your score is borderline, even a 20–30 point improvement before applying can move you a tier and save thousands over the loan." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a longer car loan term ever a good idea?",
+          "acceptedAnswer": { "@type": "Answer", "text": "72- and 84-month loans lower the monthly payment but cost more in total interest and keep you underwater (owing more than the car is worth) far longer. A common guideline is to keep the term at 60 months or less for a new car and 36–48 for a used one. If the payment only works at 84 months, the car is likely too expensive for the budget." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does my trade-in reduce the sales tax I pay?",
+          "acceptedAnswer": { "@type": "Answer", "text": "In most U.S. states, yes — sales tax is charged on the price minus the trade-in value, which makes trading in more valuable than it first appears. A handful of states (including California) tax the full purchase price regardless of trade-in. This calculator applies tax to the price minus trade-in; check your state's rule." }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I finance through the dealer or my bank?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Get pre-approved by a bank or credit union first, then let the dealer try to beat it. Dealers can sometimes offer manufacturer-subsidized rates that are genuinely lower, but they can also mark up the rate. A pre-approval turns the conversation into a simple comparison and protects you from payment-focused negotiation." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">Wallet<span>Calcs</span></a>
+    <nav class="site-nav"><a href="/">All Tools</a></nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb"><a href="/">Home</a> › Auto Loan Calculator</nav>
+  <h1 class="page-title">Auto Loan Calculator</h1>
+  <p class="page-subtitle">Your real monthly car payment — including sales tax, fees, trade-in, and down payment — plus what the loan costs you in total.</p>
+
+  <div class="calc-card">
+    <form id="calcForm" autocomplete="off">
+      <div class="calc-grid">
+        <div class="field">
+          <label for="price">Vehicle price</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="price" value="35000" min="0" step="500"></div>
+        </div>
+        <div class="field">
+          <label for="down">Down payment</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="down" value="5000" min="0" step="500"></div>
+        </div>
+        <div class="field">
+          <label for="trade">Trade-in value</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="trade" value="0" min="0" step="500"></div>
+        </div>
+        <div class="field">
+          <label for="owed">Still owed on trade-in</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="owed" value="0" min="0" step="500"></div>
+        </div>
+        <div class="field">
+          <label for="tax">Sales tax rate</label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="tax" value="6.5" min="0" max="15" step="0.1"></div>
+        </div>
+        <div class="field">
+          <label for="fees">Title, registration &amp; doc fees</label>
+          <div class="input-wrap"><span class="prefix">$</span><input type="number" id="fees" value="500" min="0" step="50"></div>
+        </div>
+        <div class="field">
+          <label for="rate">Interest rate <span class="hint">(APR)</span></label>
+          <div class="input-wrap"><span class="suffix">%</span><input type="number" id="rate" value="7.5" min="0" max="30" step="0.1"></div>
+        </div>
+        <div class="field">
+          <label for="months">Loan term</label>
+          <select id="months">
+            <option value="36">36 months</option>
+            <option value="48">48 months</option>
+            <option value="60" selected>60 months</option>
+            <option value="72">72 months</option>
+            <option value="84">84 months</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="result-hero">
+        <div class="label">Monthly payment</div>
+        <div class="value" id="payment">—</div>
+        <div class="sub" id="paymentSub"></div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row"><span class="k">Amount financed</span><span class="v" id="financed">—</span></div>
+        <div class="result-row"><span class="k">Sales tax</span><span class="v" id="taxAmt">—</span></div>
+        <div class="result-row"><span class="k">Total interest</span><span class="v" id="interest">—</span></div>
+        <div class="result-row"><span class="k">Total cost of vehicle</span><span class="v" id="totalCost">—</span></div>
+      </div>
+      <p class="result-note">Sales tax is applied to price minus trade-in (the rule in most states). Negative equity on a trade-in is rolled into the loan.</p>
+    </div>
+  </div>
+
+  <div class="ad-slot"></div>
+
+  <article class="content">
+    <h2>What actually goes into a car payment</h2>
+    <p>The advertised price is only the starting point. Your loan amount is built like this:</p>
+    <div class="formula">Amount financed = Price − Down payment − Trade-in equity + Sales tax + Fees</div>
+    <p>Trade-in <em>equity</em> matters, not just trade-in value: if you still owe money on the old car, the payoff comes out of its value first. Owe more than it's worth and the difference (negative equity) gets added to the new loan — one of the most common ways buyers end up owing far more than the car is worth on day one.</p>
+
+    <h2>The 20/4/10 rule of thumb</h2>
+    <p>A widely used sanity check for car affordability:</p>
+    <ul>
+      <li><strong>20% down</strong> — enough to stay above water as the car depreciates,</li>
+      <li><strong>4-year term</strong> (48 months) or shorter,</li>
+      <li><strong>10% of gross income</strong> as the ceiling for all car costs (payment, insurance, gas).</li>
+    </ul>
+    <p>Few buyers hit all three, and that's fine — the rule's real value is as a warning light. If you need 84 months <em>and</em> nothing down to make the payment work, the car is beyond the budget, not the loan.</p>
+
+    <h2>Why the loan term changes everything</h2>
+    <p>Run a $30,000 loan at 7.5% through the calculator at different terms:</p>
+    <table>
+      <tr><th>Term</th><th>Monthly payment</th><th>Total interest</th></tr>
+      <tr><td>36 months</td><td>$933</td><td>~$3,590</td></tr>
+      <tr><td>60 months</td><td>$601</td><td>~$6,070</td></tr>
+      <tr><td>84 months</td><td>$460</td><td>~$8,690</td></tr>
+    </table>
+    <p>The 84-month loan looks $473 cheaper each month than the 36-month, but costs about $5,100 more overall — and for most of those seven years you'll owe more than the car is worth, which becomes a real problem if it's totaled or you need to sell.</p>
+
+    <h2>Four ways to lower the real cost</h2>
+    <ol>
+      <li><strong>Get pre-approved before visiting the dealer.</strong> Credit unions frequently beat dealer financing. A pre-approval also switches negotiation from "what payment do you want?" to the actual price.</li>
+      <li><strong>Negotiate the price, not the payment.</strong> A dealer can hit any monthly payment by stretching the term. Fix the price first, then discuss financing.</li>
+      <li><strong>Check the manufacturer's subsidized rates.</strong> Genuine 0–2.9% promotional APRs exist on some new models; they usually replace cash rebates, so compare both paths with this calculator.</li>
+      <li><strong>Refinance if your credit improves.</strong> Auto refinancing is quick and often fee-free. If you financed at a dealer markup or your score has risen, a rate drop of 2–3 points is realistic.</li>
+    </ol>
+    <p>Before you commit, make sure the payment fits your whole picture — a <a href="/tools/dti-calculator/">debt-to-income check</a> takes a minute, and lenders will run the same math anyway.</p>
+  </article>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <details>
+      <summary>What credit score do I need for a good auto loan rate?</summary>
+      <div class="faq-a">Lenders price by tier: super-prime (781+) gets the best rates, prime (661–780) pays somewhat more, and subprime (below 660) can pay two to four times the prime rate. Improving a borderline score by even 20–30 points before applying can move you a tier.</div>
+    </details>
+    <details>
+      <summary>Is a longer car loan term ever a good idea?</summary>
+      <div class="faq-a">72–84 month loans lower the payment but raise total interest and keep you underwater longer. Guideline: 60 months or less for new cars, 36–48 for used. If only an 84-month term makes the payment work, the car is too expensive for the budget.</div>
+    </details>
+    <details>
+      <summary>Does my trade-in reduce the sales tax I pay?</summary>
+      <div class="faq-a">In most states, yes — tax applies to price minus trade-in. A few states (including California) tax the full price. This calculator uses the majority rule; check your state.</div>
+    </details>
+    <details>
+      <summary>Should I finance through the dealer or my bank?</summary>
+      <div class="faq-a">Get pre-approved by a bank or credit union first, then let the dealer try to beat it. Manufacturer-subsidized rates can be genuinely lower, but dealer rate markups are common — a pre-approval protects you either way.</div>
+    </details>
+  </section>
+
+  <section class="related">
+    <h2>Related calculators</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/tools/loan-amortization-calculator/"><div class="t">Loan Amortization Calculator</div><div class="d">Year-by-year schedule for any loan.</div></a>
+      <a class="tool-card" href="/tools/dti-calculator/"><div class="t">DTI Calculator</div><div class="d">Will this payment fit your debt-to-income ratio?</div></a>
+      <a class="tool-card" href="/tools/emergency-fund-calculator/"><div class="t">Emergency Fund Calculator</div><div class="d">Keep a cushion before taking on payments.</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><a href="/">Home</a><a href="/about/">About</a></div>
+    <div class="disclaimer">WalletCalcs provides free calculators for educational purposes only. Results are estimates and do not constitute financial, tax, legal, or investment advice. Consult a qualified professional before making financial decisions.</div>
+    <div>© 2026 WalletCalcs. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/calc.js"></script>
+<script>
+function calc() {
+  const price = num("price");
+  const down = num("down");
+  const trade = num("trade");
+  const owed = num("owed");
+  const taxRate = num("tax");
+  const fees = num("fees");
+  const rate = num("rate");
+  const months = num("months", 60);
+
+  const taxable = Math.max(price - trade, 0);
+  const taxAmt = taxable * taxRate / 100;
+  const tradeEquity = trade - owed; // negative equity rolls into the loan
+  const financed = Math.max(price - down - tradeEquity + taxAmt + fees, 0);
+
+  const payment = pmt(financed, rate, months);
+  if (!isFinite(payment)) return;
+  const totalInterest = payment * months - financed;
+  const totalCost = down + Math.max(tradeEquity, 0) + payment * months;
+
+  $("payment").textContent = fmtUSD2(payment);
+  $("paymentSub").textContent = "for " + months + " months at " + rate + "% APR";
+  $("financed").textContent = fmtUSD(financed);
+  $("taxAmt").textContent = fmtUSD(taxAmt);
+  $("interest").textContent = fmtUSD(totalInterest);
+  $("totalCost").textContent = fmtUSD(totalCost);
+}
+liveCalc("calcForm", calc);
+</script>
+</body>
+</html>
